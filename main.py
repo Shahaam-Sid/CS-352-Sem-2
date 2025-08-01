@@ -20,7 +20,9 @@ match choice:
         x = Clowns(size)
     case "4":
         x = BankManagers(size)
-        
+
+
+
+print(x.speak())        
 print(x)
 print(x.speak())
-        
