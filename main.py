@@ -1,11 +1,24 @@
 from rationalnumberclass import RationalNum
 
 try:
-    a = RationalNum(12, 16)
+    a = RationalNum(4, 2)
+    b = RationalNum(5, 3)
+
     
-    print(a)
-    print()
-    print(repr(a))
+    
+    print(f"A = {a}")
+    
+    print(f"B = {b}")
+    
+    print(f"A + B = {a + b}")
+    
+    print(f"A - B = {a - b}")
+    
+    print(f"Is A = B : {a == b}")
+    
+    print(f"A x B = {a * b}")
+    
+    print(f"A / B = {a/b}")
     
 except ZeroDivisionError:
     print("Cannot Divide by Zero")
