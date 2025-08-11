@@ -20,6 +20,10 @@ try:
     
     print(f"A / B = {a/b}")
     
+    print(f"Decimal Value of A = {float(a)}")
+    
+    print(f"Decimal Value of B = {float(b)}")
+    
 except ZeroDivisionError:
     print("Cannot Divide by Zero")
 except Exception:

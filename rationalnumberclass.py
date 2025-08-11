@@ -45,3 +45,6 @@ class RationalNum:
 
     def __eq__(self, other):
         return self.numerator == other.numerator and self.denominator == other.denominator
+    
+    def __float__(self):
+        return float(self.numerator) / self.denominator
