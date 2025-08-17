@@ -1,9 +1,8 @@
 from rationalnumberclass import RationalNum
 
 try:
-    a = RationalNum(4, 2)
-    b = RationalNum(5, 3)
-
+    a = RationalNum(0, 5)
+    b = RationalNum(3, 7)
     
     
     print(f"A = {a}")
