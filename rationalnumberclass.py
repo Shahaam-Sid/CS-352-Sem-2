@@ -20,6 +20,8 @@ class RationalNum:
     def __str__(self):
         if self.numerator == 0:
             return f"{0}"
+        elif self.denominator == 1:
+            return f"{self.numerator}"
         else:
             return f"{self.numerator} / {self.denominator}"
     
@@ -53,8 +55,8 @@ class RationalNum:
             return RationalNum(num, den)
         
     def __truediv__(self, other):
-        if other.numerator == 0:
-            raise ZeroDivisionError("Denominator Cannot Be Zero")
+        if self.numerator == 0:
+            return f"{0}"
 
         num = self.numerator * other.denominator
         den = self.denominator * other.numerator
@@ -65,6 +67,6 @@ class RationalNum:
     
     def __float__(self):
         if self.numerator == 0:
-            return f"{0}"
+            return 0.0
         else:
             return float(self.numerator) / self.denominator
