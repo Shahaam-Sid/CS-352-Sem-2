@@ -8,33 +8,50 @@ class RationalNum:
         elif denominator < 0:
             numerator, denominator = -numerator, -denominator
             
-            
-        hcf = gcd(numerator, denominator)
-            
-        self.numerator = numerator // hcf
-        self.denominator = denominator // hcf
+        if numerator != 0:
+            hcf = gcd(numerator, denominator)
+                
+            self.numerator = numerator // hcf
+            self.denominator = denominator // hcf
+        
+        else:
+            self.numerator, self.denominator = 0, 0
             
     def __str__(self):
-        return f"{self.numerator} / {self.denominator}"
+        if self.numerator == 0:
+            return f"{0}"
+        else:
+            return f"{self.numerator} / {self.denominator}"
     
     def __repr__(self):
         return f"Rational Number(Numerator: {self.numerator}, Denominator: {self.denominator})"
 
     def __add__(self, other):
-        num = (self.numerator * other.denominator) + (other.numerator * self.denominator)
-        den = self.denominator * other.denominator
-        return RationalNum(num, den)
+        if self.numerator == 0:
+            return other
+        
+        else:
+            num = (self.numerator * other.denominator) + (other.numerator * self.denominator)
+            den = self.denominator * other.denominator
+            return RationalNum(num, den)
     
     def __sub__(self, other):
-        num = (self.numerator * other.denominator) - (other.numerator * self.denominator)
-        den = self.denominator * other.denominator
-        return RationalNum(num, den)
+        if self.numerator == 0:
+            return other
+        else:
+            num = (self.numerator * other.denominator) - (other.numerator * self.denominator)
+            den = self.denominator * other.denominator
+            return RationalNum(num, den)
     
     def __mul__(self, other):
-        num = self.numerator * other.numerator
-        den = self.denominator * other.denominator
-        return RationalNum(num, den)
-    
+        if self.numerator == 0:
+            return f"{0}"
+        
+        else:
+            num = self.numerator * other.numerator
+            den = self.denominator * other.denominator
+            return RationalNum(num, den)
+        
     def __truediv__(self, other):
         if other.numerator == 0:
             raise ZeroDivisionError("Denominator Cannot Be Zero")
@@ -47,4 +64,7 @@ class RationalNum:
         return self.numerator == other.numerator and self.denominator == other.denominator
     
     def __float__(self):
-        return float(self.numerator) / self.denominator
+        if self.numerator == 0:
+            return f"{0}"
+        else:
+            return float(self.numerator) / self.denominator
