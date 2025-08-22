@@ -1,5 +1,11 @@
 class NdVector:
     def __init__(self, d):
+        if not isinstance(d, int):
+            raise TypeError("Enter a Number")
+        
+        if d <= 0:
+            raise ValueError("Number of Dimensions must be atleast 1")
+            
         self._coords = [0] * d
         
     def __len__(self):
@@ -9,13 +15,17 @@ class NdVector:
     
     def __getitem__(self, j):
         """Returns the Value of the given Axis"""
+        if j < -len(self) or j >= len(self):
+            raise IndexError(f"Index {j} out of range for vector of dimension {len(self)}")
         
         return self._coords[j]
     
     def __setitem__(self, j, value):
         """Set the value of the given Axis"""
-        
+        if j < -len(self) or j >= len(self):
+            raise IndexError(f"Index {j} out of range for vector of dimension {len(self)}")
         self._coords[j] = value
+
         
     def __add__(self, other):
         """Addition of two Vectors"""
@@ -41,7 +51,7 @@ class NdVector:
     
     def __mul__(self, scalar):
         """Multiplication of the Vector with a Scalar  Value"""
-        if isinstance(scalar, (NdVector, list)):
+        if not isinstance(scalar, (int, float)):
             raise TypeError("Must be mulitplied by a Scalar Number")
           
         result = NdVector(len(self))
