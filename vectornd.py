@@ -68,6 +68,23 @@ class NdVector:
         
         return result ** 0.5
         
+    def __eq__(self, other):
+        """Check if two vectors are equal"""
+        if not isinstance(other, NdVector):
+            return False
+        if len(self) != len(other):
+            return False
+        for j in range(len(self)):
+            if self[j] != other[j]:
+                return False
+        return True
+
+    def __ne__(self, other):
+        """Check if two vectors are unequal"""
+        return not self == other
+
+
+    
     def __str__(self):
         """Returns a user-friendly string representation of the vector."""
         return f"<{str(self._coords)[1:-1]}>"
