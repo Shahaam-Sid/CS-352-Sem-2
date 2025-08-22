@@ -1,4 +1,3 @@
-from csv import Error
 from vectornd import NdVector
 
 try:
