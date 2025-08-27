@@ -2,8 +2,9 @@ from WordCounter import WordCounter
 
 try:
     print("***** Word Counter Program *****")
+    print()
     
-    sent = "apple apple apple"
+    sent = "the quick brown fox jumps over the lazy dog the dog was not amused"
     
     counter = WordCounter(sent)
     
@@ -18,4 +19,5 @@ except ValueError as e:
 except Exception:
     print("An Error Occured")
 finally:
+    print()
     print("******* Program End ********")

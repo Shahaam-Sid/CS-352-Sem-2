@@ -11,7 +11,7 @@ class WordCounter:
         if sentence.isspace() or sentence.isnumeric():
             raise ValueError("String must contain Words only")
         
-        self._sentence = sentence
+        self._sentence = sentence.lower()
         list_words = self._sentence.split()
         
         if not all(word.isalpha() for word in list_words):
@@ -26,6 +26,7 @@ class WordCounter:
         counts how many times each word is used
         stores it in a Dictionary '._counts'
         """
+        self._counts = {}
         for word in self._list_words:
             self._counts[word] = self._counts.get(word, 0) + 1
             
