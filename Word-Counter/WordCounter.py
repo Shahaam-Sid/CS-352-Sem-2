@@ -1,4 +1,10 @@
 class WordCounter:
+    """
+    This Class takes a sentence as input
+    Outputs how many times each word is used
+    input must be string
+    only letter must be used in string
+    """
     def __init__(self, sentence):
         if not isinstance(sentence, str):
             raise TypeError("Enter a String in Constructer")
@@ -16,10 +22,17 @@ class WordCounter:
         
     
     def count_word(self):
+        """
+        counts how many times each word is used
+        stores it in a Dictionary '._counts'
+        """
         for word in self._list_words:
             self._counts[word] = self._counts.get(word, 0) + 1
             
     def show_count(self):
+        """
+        print the word and its count
+        """
         for word, count in self._counts.items():
             print(f"'{word}' is present {count} times")
         
