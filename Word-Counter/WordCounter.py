@@ -46,11 +46,3 @@ WordCounter('sentence': '{self._sentence}')
            'self._counts: '{self._counts}'
            
 """
-    
-    
-x = WordCounter("Shahaam is playing")
-x.count_word()
-x.show_count()
-
-print(x)
-print(repr(x))
