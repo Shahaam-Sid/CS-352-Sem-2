@@ -15,7 +15,6 @@ class BirthdayParadox:
         
         self._n = n
         self.sample_list = []
-        self.probabity = 0
         
         self.sample = []
         self.dd = 0
@@ -43,17 +42,14 @@ class BirthdayParadox:
     def check_paradox(self):
         counter = 0
         for i in range(0, self._n):
-            for j in range(0, self._n):
+            for j in range(i + 1, self._n):
                 if self.sample_list[i] == self.sample_list[j]:
-                    counter += 1
+                    return True
+        
+        return False
+        
 
-        counter -= 2 #removes count when sample compares with it self
-        self.probability = counter / self._n
-        
-    def test(self):
-        print(self.sample_list)
-        
     def __str__(self):
-        return f"Birthday Paradox test for a sample of {self._n} pupils"
+        return f"Birthday Paradox test for a sample of {self._n} pupils: {self.sample_list}"
     def __repr__(self):
-        return f"Birthday Paradox(n = {self._n})"
+        return f"Birthday Paradox(n = {self._n}, sample_list = {self.sample_list})"
