@@ -53,3 +53,44 @@ class BirthdayParadox:
         return f"Birthday Paradox test for a sample of {self._n} pupils: {self.sample_list}"
     def __repr__(self):
         return f"Birthday Paradox(n = {self._n}, sample_list = {self.sample_list})"
+    
+    
+    
+class SamplingBirthdayParadox:
+    def __init__(self, sample_lenghts):
+        if not isinstance(sample_lenghts, list):
+            raise TypeError("Sample Lenghts must be a List")
+            
+        if any(not isinstance(x, int) for x in sample_lenghts):
+            raise TypeError("Sample Lenghts List must only contain Integer Values")
+            
+        self._sample_lenghts = sample_lenghts
+            
+    def sampling_birthday_paradox(self):
+        for sample in self._sample_lenghts:
+            case_true = 0
+            case_false = 0
+            for _ in range(1, 2000):
+                paradox = BirthdayParadox(sample + 23)
+                if paradox.check_paradox():
+                    case_true += 1
+                else:
+                    case_false += 1
+                    
+            probability = (case_true) / (case_true + case_false)
+            print("**************************************")
+            print(f"Probability for {sample + 23} pupil is {probability:.3f}")    
+
+            if probability > 0.5:
+                    print("Birthday Paradox is True for this Sample")
+            else:
+                print("Birthday Paradox is False for this Sample")
+            print("**************************************")
+            print()
+            
+            
+            
+    def __str__(self):
+        return f"Sample: {self._sample_lenghts}"
+    def __repr__(self):
+        return f"sample_lenght({self._sample_lenghts})"
