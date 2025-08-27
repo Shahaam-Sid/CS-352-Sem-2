@@ -20,11 +20,8 @@ class BirthdayParadox:
         dd = 0
         mm = 0
         
-        for i in range(0, self._n):
+        for _ in range(0, self._n):
             
-            self.sample = []
-            dd = 0
-            mm = 0
             
             mm = random.randint(1, 12)
             if mm == 2:
@@ -43,7 +40,8 @@ class BirthdayParadox:
         """
         Check for same dates in samples
         returns True if same dates found
-        returns False if same dates not found"""
+        returns False if same dates not found
+        """
         for i in range(0, self._n):
             for j in range(i + 1, self._n):
                 if self.sample_list[i] == self.sample_list[j]:
@@ -56,3 +54,52 @@ class BirthdayParadox:
         return f"Birthday Paradox test for a sample of {self._n} pupils: {self.sample_list}"
     def __repr__(self):
         return f"Birthday Paradox(n = {self._n}, sample_list = {self.sample_list})"
+    
+    
+    
+class SamplingBirthdayParadox:
+    """
+    This class takes Sample Lenghts, so the Paradox could be tested on them
+    sample_lengths must be a list, containing only integer values
+    """
+    def __init__(self, sample_lengths):
+        if not isinstance(sample_lengths, list):
+            raise TypeError("Sample Lenghts must be a List")
+            
+        if any(not isinstance(x, int) for x in sample_lengths):
+            raise TypeError("Sample Lenghts List must only contain Integer Values")
+            
+        self._sample_lengths = sample_lengths
+            
+    def sampling_birthday_paradox(self):
+        """
+        runs and checks all the cases 2000 times
+        returns probability of each case
+        """
+        for sample in self._sample_lengths:
+            case_true = 0
+            case_false = 0
+            for _ in range(1, 2000):
+                paradox = BirthdayParadox(sample + 23)
+                if paradox.check_paradox():
+                    case_true += 1
+                else:
+                    case_false += 1
+                    
+            probability = (case_true) / (case_true + case_false)
+            print("**************************************")
+            print(f"Probability for {sample + 23} pupil is {probability:.3f}")    
+
+            if probability > 0.5:
+                    print("Birthday Paradox is True for this Sample")
+            else:
+                print("Birthday Paradox is False for this Sample")
+            print("**************************************")
+            print()
+            
+            
+            
+    def __str__(self):
+        return f"Sample: {self._sample_lengths}"
+    def __repr__(self):
+        return f"sample_lenght({self._sample_lengths})"
