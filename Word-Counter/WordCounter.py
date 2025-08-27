@@ -3,15 +3,21 @@ class WordCounter:
         if not isinstance(sentence, str):
             raise TypeError("Enter a String in Constructer")
         if sentence.isspace() or sentence.isnumeric():
-            raise ValueError("String must contain words only")
+            raise ValueError("String must contain Words only")
         
-        list_words = sentence.split()
+        self._sentence = sentence
+        list_words = self._sentence.split()
         
         if not all(word.isalpha() for word in list_words):
-            raise ValueError("String must contain words only")
+            raise ValueError("String must contain Words only")
         
-        self.list_words = list_words
+        self._list_words = list_words
+        self.counts = {}
         
+    
+    def count_word(self):
+        for word in self._list_words:
+            self.counts[word] = self.counts.get(word, 0) + 1
         
     def __str__(self):
         return f"Sentence: {self._sentence}"
