@@ -20,11 +20,8 @@ class BirthdayParadox:
         dd = 0
         mm = 0
         
-        for i in range(0, self._n):
+        for _ in range(0, self._n):
             
-            self.sample = []
-            dd = 0
-            mm = 0
             
             mm = random.randint(1, 12)
             if mm == 2:
@@ -40,7 +37,11 @@ class BirthdayParadox:
         
     
     def check_paradox(self):
-        counter = 0
+        """
+        Check for same dates in samples
+        returns True if same dates found
+        returns False if same dates not found
+        """
         for i in range(0, self._n):
             for j in range(i + 1, self._n):
                 if self.sample_list[i] == self.sample_list[j]:
@@ -57,17 +58,25 @@ class BirthdayParadox:
     
     
 class SamplingBirthdayParadox:
-    def __init__(self, sample_lenghts):
-        if not isinstance(sample_lenghts, list):
+    """
+    This class takes Sample Lenghts, so the Paradox could be tested on them
+    sample_lengths must be a list, containing only integer values
+    """
+    def __init__(self, sample_lengths):
+        if not isinstance(sample_lengths, list):
             raise TypeError("Sample Lenghts must be a List")
             
-        if any(not isinstance(x, int) for x in sample_lenghts):
+        if any(not isinstance(x, int) for x in sample_lengths):
             raise TypeError("Sample Lenghts List must only contain Integer Values")
             
-        self._sample_lenghts = sample_lenghts
+        self._sample_lengths = sample_lengths
             
     def sampling_birthday_paradox(self):
-        for sample in self._sample_lenghts:
+        """
+        runs and checks all the cases 2000 times
+        returns probability of each case
+        """
+        for sample in self._sample_lengths:
             case_true = 0
             case_false = 0
             for _ in range(1, 2000):
@@ -91,6 +100,6 @@ class SamplingBirthdayParadox:
             
             
     def __str__(self):
-        return f"Sample: {self._sample_lenghts}"
+        return f"Sample: {self._sample_lengths}"
     def __repr__(self):
-        return f"sample_lenght({self._sample_lenghts})"
+        return f"sample_lenght({self._sample_lengths})"

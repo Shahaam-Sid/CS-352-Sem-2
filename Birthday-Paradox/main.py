@@ -1,4 +1,4 @@
-from Birthday_Paradox import BirthdayParadox, SamplingBirthdayParadox
+from Birthday_Paradox import SamplingBirthdayParadox
 
 try:
     
@@ -8,8 +8,6 @@ try:
     x = SamplingBirthdayParadox(samples)
     x.sampling_birthday_paradox()
         
-        
-    print("************ Program End *************")
     
 except TypeError as e:
     print("Error:", e)
@@ -17,3 +15,5 @@ except ValueError as e:
     print("Error:", e)
 except Exception:
     print("An Error Occured")
+finally:
+    print("************ Program End *************")
