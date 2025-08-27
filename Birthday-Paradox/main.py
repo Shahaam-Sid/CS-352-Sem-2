@@ -3,6 +3,10 @@ from Birthday_Paradox import SamplingBirthdayParadox
 try:
     
     print("****** Birthday Paradox Testing ******")
+    print("")
+    print("Birthday Paradox:")
+    print(" You only need 23 people in a room for there to be more than a 50% chance that two of them share a birthday")
+    print()
     
     samples = [x * 5 for x in range(1, 21)]
     x = SamplingBirthdayParadox(samples)
