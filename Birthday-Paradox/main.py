@@ -1,16 +1,15 @@
 from Birthday_Paradox import BirthdayParadox
 
 try:
-
     
-
+    print("****** Birthday Paradox Testing ******")
     
-    samples = [x * 5 for x in range(1, 20)]
+    samples = [x * 5 for x in range(1, 21)]
     for sample in samples:
         
         case_true = 0
         case_false = 0
-        for _ in range(1, 100):
+        for _ in range(1, 2000):
             paradox = BirthdayParadox(sample + 23)
             if paradox.check_paradox():
                 case_true += 1
@@ -18,11 +17,18 @@ try:
                 case_false += 1
      
         probability = (case_true) / (case_true + case_false)
-        print(f"Probability for {sample + 23} pupil is {probability}")
+        print("**************************************")
+        print(f"Probability for {sample + 23} pupil is {probability:.3f}")
         if probability > 0.5:
-            print("Birthday Paradox is Truee")
-    
+            print("Birthday Paradox is True")
+        else:
+            print("Birthday Paradox is False")
+        print("**************************************")
+        print()
         
+        
+    print("************ Program End *************")
+    
 except TypeError as e:
     print("Error:", e)
 except ValueError as e:

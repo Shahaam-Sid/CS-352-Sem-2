@@ -17,24 +17,24 @@ class BirthdayParadox:
         self.sample_list = []
         
         self.sample = []
-        self.dd = 0
-        self.mm = 0
+        dd = 0
+        mm = 0
         
         for i in range(0, self._n):
             
             self.sample = []
-            self.dd = 0
-            self.mm = 0
+            dd = 0
+            mm = 0
             
-            self.mm = random.randint(1, 12)
-            if self.mm == 2:
-                self.dd = random.randint(1, 29)
-            elif self.mm in [4, 6, 9, 11]:
-                self.dd = random.randint(1, 30)
+            mm = random.randint(1, 12)
+            if mm == 2:
+                dd = random.randint(1, 29)
+            elif mm in [4, 6, 9, 11]:
+                dd = random.randint(1, 30)
             else:
-                self.dd = random.randint(1, 31)
+                dd = random.randint(1, 31)
                 
-            self.sample = [self.dd, self.mm]
+            self.sample = [dd, mm]
             self.sample_list.append(self.sample)
         
         
