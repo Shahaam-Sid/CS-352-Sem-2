@@ -2,9 +2,7 @@ from Birthday_Paradox import BirthdayParadox
 
 try:
     x = BirthdayParadox(25)
-    print(x)
-    print(repr(x))
-    x.test()
+    print(BirthdayParadox.__doc__)
     
     
 except TypeError as e:

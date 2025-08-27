@@ -2,12 +2,12 @@ import random
 
 
 class BirthdayParadox:
-    def __init__(self, n):
-        """
-        A Class to verify Birthday Pardox
+    """
+        A Class to verify Birthday Paradox
         n is the Number of people in test sample
         n must be more 23
         """
+    def __init__(self, n):
         if not isinstance(n, int):
             raise TypeError("Input must be an Integer")
         if n <= 23:
@@ -15,6 +15,7 @@ class BirthdayParadox:
         
         self._n = n
         self.sample_list = []
+        self.probabity = 0
         
         self.sample = []
         self.dd = 0
@@ -39,6 +40,16 @@ class BirthdayParadox:
         
         
     
+    def check_paradox(self):
+        counter = 0
+        for i in range(0, self._n):
+            for j in range(0, self._n):
+                if self.sample_list[i] == self.sample_list[j]:
+                    counter += 1
+
+        counter -= 2 #removes count when sample compares with it self
+        self.probability = counter / self._n
+        
     def test(self):
         print(self.sample_list)
         
