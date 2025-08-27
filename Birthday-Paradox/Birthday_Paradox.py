@@ -40,7 +40,10 @@ class BirthdayParadox:
         
     
     def check_paradox(self):
-        counter = 0
+        """
+        Check for same dates in samples
+        returns True if same dates found
+        returns False if same dates not found"""
         for i in range(0, self._n):
             for j in range(i + 1, self._n):
                 if self.sample_list[i] == self.sample_list[j]:

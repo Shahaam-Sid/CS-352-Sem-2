@@ -4,12 +4,13 @@ try:
     
     print("****** Birthday Paradox Testing ******")
     
-    samples = [x * 5 for x in range(1, 21)]
+    samples = [x * 5 for x in range(1, 21)] #simulates n = 5, 10, 15, ..., 100
     for sample in samples:
         
         case_true = 0
         case_false = 0
         for _ in range(1, 2000):
+            #more the sampling more accurate probability, but slower
             paradox = BirthdayParadox(sample + 23)
             if paradox.check_paradox():
                 case_true += 1
