@@ -85,8 +85,8 @@ class SamplingBirthdayParadox:
             print("**************************************")
             print(f"Probability for {sample} pupil is {probability:.3f}")    
 
-            if probability > 0.5:
-                    print("Birthday Paradox is True for this Sample")
+            if sample >= 23 and  probability >= 0.5:
+                print("Birthday Paradox is True for this Sample")
             else:
                 print("Birthday Paradox is False for this Sample")
             print("**************************************")
