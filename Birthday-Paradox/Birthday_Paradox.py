@@ -5,13 +5,12 @@ class BirthdayParadox:
     """
         A Class to verify Birthday Paradox
         n is the Number of people in test sample
-        n must be more 23
         """
     def __init__(self, n):
         if not isinstance(n, int):
             raise TypeError("Input must be an Integer")
-        if n <= 23:
-            raise ValueError("Number of People must be more 23")
+        if n <= 0:
+            raise ValueError("Number of People must be more 0")
         
         self._n = n
         self.sample_list = []
@@ -76,7 +75,7 @@ class SamplingBirthdayParadox:
             case_true = 0
             case_false = 0
             for _ in range(1, 2000):
-                paradox = BirthdayParadox(sample + 23)
+                paradox = BirthdayParadox(sample)
                 if paradox.check_paradox():
                     case_true += 1
                 else:
@@ -84,7 +83,7 @@ class SamplingBirthdayParadox:
                     
             probability = (case_true) / (case_true + case_false)
             print("**************************************")
-            print(f"Probability for {sample + 23} pupil is {probability:.3f}")    
+            print(f"Probability for {sample} pupil is {probability:.3f}")    
 
             if probability > 0.5:
                     print("Birthday Paradox is True for this Sample")
