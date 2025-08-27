@@ -16,10 +16,6 @@ class BirthdayParadox:
         self._n = n
         self.sample_list = []
         
-        self.sample = []
-        dd = 0
-        mm = 0
-        
         for _ in range(0, self._n):
             
             
