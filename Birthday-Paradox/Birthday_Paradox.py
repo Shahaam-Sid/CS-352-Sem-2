@@ -75,7 +75,7 @@ class SamplingBirthdayParadox:
             case_true = 0
             case_false = 0
             for _ in range(1, 2000):
-                paradox = BirthdayParadox(sample)
+                paradox = BirthdayParadox(sample) #Composition
                 if paradox.check_paradox():
                     case_true += 1
                 else:
