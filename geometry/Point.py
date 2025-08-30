@@ -62,7 +62,7 @@ class Point:
         
         lenght = ((self.x - other.x) ** 2 + (self.y - other.y) ** 2) ** 0.5
         
-        return f"Distance b/w {self} and {other} is {lenght}"
+        return lenght
     
     def __add__(self, other):
         return Point(self.x + other.x, self.y + other.y)
