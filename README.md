@@ -7,7 +7,9 @@
  #### UML
 
  1. Birthday Paradox
+ 
  ![Birthday Paradox UML Diagram](Birthday-Paradox/UML.jpg)
 
 2. Word Count
- ![Word Count UML Diagram](Word-Counter/UML.jpg)
+
+![Word Count UML Diagram](Word-Counter/UML.jpg)
