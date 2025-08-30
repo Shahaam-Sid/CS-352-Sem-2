@@ -14,3 +14,6 @@ This project simulates a turtle graphics system where a turtle moves on a canvas
 7. Command
 9. zigzagCommand
 10. squareCommand
+
+#### UML
+![UML Diagram](UML.jpg)
