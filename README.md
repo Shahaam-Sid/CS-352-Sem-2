@@ -8,3 +8,9 @@ This project simulates a turtle graphics system where a turtle moves on a canvas
 1. Point  
 2. Line  
 3. Pen  
+4. tkPanel
+5. Turtle
+6. App
+7. Command
+9. zigzagCommand
+10. squareCommand
