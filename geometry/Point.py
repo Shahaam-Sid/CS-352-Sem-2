@@ -1,5 +1,18 @@
 class Point:
+    """
+    A Class that creates Point object for a canvas
+    x being the x-Coordinate
+    y being the y-Coordinate
+    """
     def __init__(self, x = 0, y = 0):
+        """
+        Inputs x and y Coordinates
+        Also contains copy-constructer functionality
+        
+        Args:
+            x (int or float): Default =  0.
+            y (int or float): Default =  0.
+        """
         
         if isinstance(x, Point):
             self._x = x._x
@@ -32,6 +45,18 @@ class Point:
         self._y = value
         
     def distance(self, other):
+        """
+        Calculates the Distance b/w  two Points
+
+        Args:
+            other (Point)
+
+        Raises:
+            TypeError: if other is other then Point Object raises error
+
+        Returns:
+            Point Onject
+        """
         if not isinstance(other, Point):
             raise TypeError("Both inputs must be a Point")
         
@@ -47,8 +72,3 @@ class Point:
     
     def __str__(self):
         return f"Point: (x, y) = ({self.x}, {self.y})"
-
-p1 = Point(3, 4)
-p2 = Point(0, 0)
-# Distance between two points
-print(p1.distance(p2))  # 5.0  (classic 3-4-5 triangle)
