@@ -1,8 +1,13 @@
 # Lab-Task-Week-9
 ## Lab Task Week 9 OOP CS-352
-<br>
 
-<ol>
-  <li> Birthday Paradox Program </li>
-  <li> Word Count Program </li>
-</ol>
+ 1. Birthday Paradox Program 
+ 2. Word Count Program
+
+ #### UML
+
+ 1. Birthday Paradox
+ ![Birthday Paradox UML Diagram](Birthday-Paradox/UML.jpg)
+
+2. Word Count
+ ![Word Count UML Diagram](Word-Counter/UML.jpg)
