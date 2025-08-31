@@ -1,4 +1,4 @@
-from Point import Point
+from geometry.Point import Point
 
 class Line:
     """

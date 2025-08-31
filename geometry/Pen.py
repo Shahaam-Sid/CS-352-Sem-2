@@ -1,5 +1,5 @@
-from Line import Line
-from Point import Point
+from geometry.Line import Line
+from geometry.Point import Point
 
 class Pen:
     """
@@ -33,7 +33,7 @@ class Pen:
         self.canvas = canvas
 
     @property
-    def initial_pos(self):
+    def current_pos(self):
         """
         Get the current position of the pen.
 
@@ -44,8 +44,8 @@ class Pen:
         """
         return self._current_pos
 
-    @initial_pos.setter
-    def initial_pos(self, updated):
+    @current_pos.setter
+    def current_pos(self, updated):
         """
         Update the current position of the pen.
 
