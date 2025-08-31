@@ -17,3 +17,26 @@ This project simulates a turtle graphics system where a turtle moves on a canvas
 
 #### UML
 ![UML Diagram](UML.jpg)
+
+#### Project Structure
+
+```
+Turtle
+│   main.py
+│   README.md
+│   UML.jpg
+│
+├───app
+│       app.py
+│
+├───canvas
+│       Canvas.py
+│
+├───geometry
+│       Line.py
+│       Pen.py
+│       Point.py
+│
+└───Turtle
+        turtle.py
+```
