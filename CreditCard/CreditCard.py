@@ -1,17 +1,14 @@
-from multiprocessing.dummy import Value
-
-
 class CreditCard:
-    def __init__ (self, name, bank_name, account_id, limit):
+    def __init__ (self, customer, bank_name, account_id, limit):
         
-        self.name = name
+        self.customer = customer
         self.bank_name = bank_name
         self.account_id = account_id
         self.limit = limit
         self.balance = 0
         
     @property
-    def name(self):
+    def customer(self):
         return self._name
     
     @property
@@ -30,8 +27,8 @@ class CreditCard:
     def balance(self):
         return self._balance
     
-    @name.setter
-    def name(self, value):
+    @customer.setter
+    def customer(self, value):
 
         if not isinstance(value, str):
             raise TypeError("Name must be a string")
@@ -103,10 +100,26 @@ class CreditCard:
     def balance(self, value):
         self._balance = value
         
+    def get_customer(self):
+        return self.customer
+    
+    def get_bank_name(self):
+        return self.bank_name
+    
+    def get_account_id(self):
+        return self.account_id
+    
+    def get_limit(self):
+        return self.limit
+    
+    def get_balance(self):
+        return self.limit
+        
+        
     def __str__(self):
         return f"""
 ------------------------Credit Card Details------------------------
-Account Holder: Mr/Ms. {self.name}
+Account Holder: Mr/Ms. {self.customer}
 BankName: {self.bank_name}
 ID: {self.account_id}
 Limit: ${self.limit}
@@ -115,7 +128,7 @@ Balance: ${self.balance}
 """
 
     def __repr__(self):
-        return f"CreditCard(name = '{self.name}', bank_name = '{self.bank_name}', account_id = '{self.account_id}', limit = '{self.limit}', balance = '{self.balance}')"
+        return f"CreditCard(customer = '{self.customer}', bank_name = '{self.bank_name}', account_id = '{self.account_id}', limit = '{self.limit}', balance = '{self.balance}')"
     
 try:
     acc = CreditCard('Muhammad Shahaam Siddiqui', 'UBL Bank Limited', '1010 0101', 1000)
