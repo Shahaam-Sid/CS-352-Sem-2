@@ -1,3 +1,6 @@
+import re
+
+
 class CreditCard:
     def __init__ (self, customer, bank_name, account_id, limit):
         
@@ -91,8 +94,8 @@ class CreditCard:
         if not isinstance(value, int):
             raise TypeError("Limit must be an Integer")
         
-        if value < 500:
-            raise ValueError("Limit cannot be less then $500.00")
+        if value < 0:
+            raise ValueError("Limit must be a positive value")
         
         self._limit = value
     
@@ -115,6 +118,28 @@ class CreditCard:
     def get_balance(self):
         return self.limit
         
+    def charge(self, price):
+        if not isinstance(price, (int, float)):
+            raise TypeError("Amount must be An Integer or Float Value")
+        if price <= 0:
+            raise ValueError("Amount cannot be less then or equals to zero")
+    
+        if price + self.balance > self.limit:
+            return False
+        else:
+            self.balance += price
+            return True
+        
+    def make_payment(self, amount):
+        if not isinstance(amount, (int, float)):
+            raise TypeError("Amount must be An Integer or Float Value")
+        if amount <= 0:
+            raise ValueError("Amount cannot be less then or equals to zero")
+        
+        if amount > self.balance:
+            print("Insufficient Balance")
+        else:
+            self.balance -= amount
         
     def __str__(self):
         return f"""
