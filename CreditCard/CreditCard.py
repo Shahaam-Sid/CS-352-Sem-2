@@ -1,7 +1,3 @@
-import re
-from tkinter import NO
-
-
 class CreditCard:
     def __init__ (self, customer, bank_name, account_id, limit):
         
