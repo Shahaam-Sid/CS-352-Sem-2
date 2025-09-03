@@ -159,22 +159,3 @@ Balance: ${self.balance}
 
     def __repr__(self):
         return f"CreditCard(customer = '{self.customer}', bank_name = '{self.bank_name}', account_id = '{self.account_id}', limit = '{self.limit}', balance = '{self.balance}')"
-    
-try:
-    acc = CreditCard('Muhammad Shahaam Siddiqui', 'UBL Bank Limited', '1010 0101', 1000)
-
-    acc.charge(500)
-    acc.make_payment()
-
-    print(acc.get_customer())
-    print(acc.get_bank_name())
-    print(acc.get_account_id())
-    print(acc.get_limit())
-    print(acc.get_balance())
-
-
-except ValueError as e:
-    print("Error:", e)
-    
-except TypeError as e:
-    print("Error:", e)
