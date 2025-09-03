@@ -1,4 +1,5 @@
 import re
+from tkinter import NO
 
 
 class CreditCard:
@@ -116,9 +117,11 @@ class CreditCard:
         return self.limit
     
     def get_balance(self):
-        return self.limit
+        return self.balance
         
-    def charge(self, price):
+    def charge(self, price=None):
+        if price is None:
+            raise TypeError("Amount must be An Integer or Float Value")
         if not isinstance(price, (int, float)):
             raise TypeError("Amount must be An Integer or Float Value")
         if price <= 0:
@@ -130,7 +133,9 @@ class CreditCard:
             self.balance += price
             return True
         
-    def make_payment(self, amount):
+    def make_payment(self, amount=None):
+        if amount is None:
+            raise TypeError("Amount must be An Integer or Float Value")
         if not isinstance(amount, (int, float)):
             raise TypeError("Amount must be An Integer or Float Value")
         if amount <= 0:
@@ -157,9 +162,17 @@ Balance: ${self.balance}
     
 try:
     acc = CreditCard('Muhammad Shahaam Siddiqui', 'UBL Bank Limited', '1010 0101', 1000)
-    print(acc)
-    print(repr(acc))
-    
+
+    acc.charge(500)
+    acc.make_payment()
+
+    print(acc.get_customer())
+    print(acc.get_bank_name())
+    print(acc.get_account_id())
+    print(acc.get_limit())
+    print(acc.get_balance())
+
+
 except ValueError as e:
     print("Error:", e)
     
