@@ -1,3 +1,6 @@
+from multiprocessing.dummy import Value
+
+
 class CreditCard:
     def __init__ (self, name, bank_name, account_id, limit):
         
@@ -31,28 +34,69 @@ class CreditCard:
     def name(self, value):
 
         if not isinstance(value, str):
-            raise ValueError("Value must be a string")  
-                
+            raise TypeError("Name must be a string")
+        
+        value = value.strip()
+        
+        if value is None or len(value) == 0:
+            raise ValueError("Name must contain Alphabet")
+                     
         if value.isspace():
             raise ValueError("Name cannot be whitespaces")
         
-        temp = value.strip()
-                
-        if any(not x.isalpha() for x in temp.split()):
+        if any(not x.isalpha() for x in value.split()):
             raise ValueError("Name must only contain Alphabet")
     
         self._name = value
             
     @bank_name.setter
     def bank_name(self, value):
+        
+        if not isinstance(value, str):
+            raise TypeError("Bank name must be a string")
+        
+        value = value.strip()
+        
+        if value is None or len(value) == 0:
+            raise ValueError("Bank name must contain Alphabet")  
+                
+        if value.isspace():
+            raise ValueError("Bank name cannot be whitespaces")
+        
+        if value.isdigit():
+            raise ValueError("Bank name must contain Alphabet")
+        
         self._bank_name = value
         
     @account_id.setter
     def account_id(self, value):
+        
+        if not isinstance(value, str):
+            raise TypeError("Account ID must be a string")
+        
+        value = value.strip()
+        
+        if value is None or len(value) == 0:
+            raise ValueError("Account ID must contain Numbers") 
+                
+        if value.isspace():
+            raise ValueError("Account ID cannot be whitespaces")        
+        
+        if any(not x.isdecimal() for x in value.split()):
+            raise ValueError("Account ID must only contain Numbers")
+        
+        
         self._account_id = value
         
     @limit.setter
     def limit(self, value):
+        
+        if not isinstance(value, int):
+            raise TypeError("Limit must be an Integer")
+        
+        if value < 500:
+            raise ValueError("Limit cannot be less then $500.00")
+        
         self._limit = value
     
     @balance.setter
@@ -60,16 +104,26 @@ class CreditCard:
         self._balance = value
         
     def __str__(self):
-        return f"Credit Card(Name: '{self.name}' Bank: '{self.bank_name}', ID: '{self.account_id}', Limit: '{self.limit}', Balance: '{self.balance}')"
-    
+        return f"""
+------------------------Credit Card Details------------------------
+Account Holder: Mr/Ms. {self.name}
+BankName: {self.bank_name}
+ID: {self.account_id}
+Limit: ${self.limit}
+Balance: ${self.balance}
+-------------------------------------------------------------------
+"""
+
+    def __repr__(self):
+        return f"CreditCard(name = '{self.name}', bank_name = '{self.bank_name}', account_id = '{self.account_id}', limit = '{self.limit}', balance = '{self.balance}')"
     
 try:
-    acc = CreditCard('Test', 'Test Bank', '1010101', 1000)
-    acc.name = "Muhammad Shahaam Siddiqui"
-    print(acc)     
+    acc = CreditCard('Muhammad Shahaam Siddiqui', 'UBL Bank Limited', '1010 0101', 1000)
+    print(acc)
+    print(repr(acc))
     
 except ValueError as e:
     print("Error:", e)
     
 except TypeError as e:
-    print("Error", e)
+    print("Error:", e)
