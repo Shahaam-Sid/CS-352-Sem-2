@@ -154,4 +154,4 @@ Balance: ${self.balance}
 """
 
     def __repr__(self):
-        return f"CreditCard(customer = '{self.customer}', bank_name = '{self.bank_name}', account_id = '{self.account_id}', limit = '{self.limit}', balance = '{self.balance}')"
+        return f"CreditCard(customer = '{self.customer}', bank_name = '{self.bank_name}', account_id = '{self.account_id}', limit = {self.limit}, balance = {self.balance})"
