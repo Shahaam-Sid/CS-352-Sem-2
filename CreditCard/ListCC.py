@@ -68,6 +68,24 @@ class ListCC:
             else:
                 raise IndexError(f"Index Not Found ListCC Contains {len(self._list)} items")
             
+    def __delitem__(self, index):
+        if not isinstance(index, int):
+            raise TypeError("Index must be an integer")
+            
+        if index < 0:
+            index = len(self._list) + index
+    
+        if index < 0 or index >= len(self._list):
+            raise IndexError(f"Index Not Found. ListCC Contains {len(self._list)} items")
+            
+        new_list = [None] * (len(self._list) - 1)
+        j = 0
+        for i in range(len(self._list)):
+            if i == index:
+                continue
+            new_list[j] = self._list[i]
+            j += 1
+                
             
     def __str__(self):
         for card in self._list:
