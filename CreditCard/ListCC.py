@@ -9,8 +9,19 @@ class ListCC:
         if not isinstance(credit_card, CreditCard):
             raise TypeError("ListCC Only Works with Credit Card Objects")
         
-        self._list.append(credit_card)
+        initial_lenght = len(self._list)
+        final_lenght = initial_lenght + 1
         
+        new_list = [None] * final_lenght
+        
+        for i in range(initial_lenght):
+            new_list[i] = self._list[i]
+            
+        new_list[-1] = credit_card
+        
+        self._list = new_list
+        
+                                   
     def __contains__(self, credit_card):
         if not isinstance(credit_card, CreditCard):
             raise TypeError("ListCC Only Works with Credit Card Objects")
@@ -24,11 +35,9 @@ class ListCC:
     def __getitem__(self, index):
         if not isinstance(index, int):
             raise TypeError("Index must be an integer")
-        if len(self._list) == 0 and index == -1:
-            raise IndexError(f"Index Not Found ListCC Contains {len(self._list)} items")
         
         if index < 0:
-            if len(self._list) > -(index):
+            if len(self._list) >= -(index):
                 return self._list[index]
             else:
                 raise IndexError(f"Index Not Found ListCC Contains {len(self._list)} items")
@@ -39,9 +48,27 @@ class ListCC:
             
             else:
                 raise IndexError(f"Index Not Found ListCC Contains {len(self._list)} items")
-
+            
+    def __setitem__(self, index, value):
+        if not isinstance(index, int):
+            raise TypeError("Index must be an integer")
+        if not isinstance(value, CreditCard):
+            raise TypeError("Value must be Credit Card Object")
         
-        
+        if index < 0:
+            if len(self._list) >= -(index):
+                self._list[index] = value
+            else:
+                raise IndexError(f"Index Not Found ListCC Contains {len(self._list)} items")
+            
+        else:
+            if len(self._list) > index:
+                self._list[index] = value
+            
+            else:
+                raise IndexError(f"Index Not Found ListCC Contains {len(self._list)} items")
+            
+            
     def __str__(self):
         for card in self._list:
             print(card)
@@ -60,5 +87,6 @@ l = ListCC()
 l.add(a)
 l.add(b)
 l.add(c)
+l[2] = CreditCard('Taimoor', 'JS Bank', '9999', 100000)
 
 print(l)
