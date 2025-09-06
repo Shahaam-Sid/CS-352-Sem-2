@@ -1,7 +1,19 @@
 from CreditCard import CreditCard
 
 class ListCC:
+    """
+    A Custom List Class made for CreditCard Objects
+    """
     def __init__(self, wallet=None):
+        """
+        Initializes Class
+        If Wallet is None Creates an Empty List
+        If Wallet is Entered(Must be List containing CreditCard object Only)
+            assigns it to the List
+        Args:
+            wallet (List): Defaults to None.
+        """
+        
         if not (isinstance(wallet, list)) and (wallet is not None):
             raise TypeError("ListCC must be A List or None")
         
@@ -14,10 +26,22 @@ class ListCC:
             self._list = wallet[:]
         
     def display(self):
+        """
+        Displays Credit Cards
+        """
+        
+        print("No. of Cards:", len(self))
         for card in self._list:
             print(card)
         
     def add(self, credit_card):
+        """
+        Creates a new index and adds Credit Card
+        Args:
+            credit_card (CreditCard)
+
+        """
+
         if not isinstance(credit_card, CreditCard):
             raise TypeError("ListCC Only Works with Credit Card Objects")
         
@@ -34,9 +58,19 @@ class ListCC:
         self._list = new_list
         
     def empty(self):
+        """
+        Empties the List
+        """
         self._list = []
         
     def add_collection(self, collection):
+        """
+        Adds the entered List of Credit Cards to the
+            end of the existing list
+
+        Args:
+            collection (List)
+        """
         if not isinstance(collection, list):
             raise TypeError("Collection must be a List")
         if any(not isinstance(x, CreditCard) for x in collection):
@@ -46,6 +80,15 @@ class ListCC:
             self.add(i)
             
     def index(self, id):
+        """
+        Returns the Index of The Given Account ID
+
+        Args:
+            id (str)
+
+        Returns:
+            int
+        """
         if not isinstance(id, str):
             raise TypeError("Account ID must be a string")
         
@@ -67,6 +110,15 @@ class ListCC:
         raise ValueError("ID Not Matched | Credit Card Not Found")
                 
     def insert(self, index, credit_card):
+        """
+        Inserts the credit card to the
+        given Index
+
+        Args:
+            index (int)
+            credit_card (CreditCard)
+        """
+        
         if not isinstance(index, int):
             raise TypeError("Index must be an Integer Value")
         if not isinstance(credit_card, CreditCard):
@@ -90,6 +142,16 @@ class ListCC:
         self._list = new_list
         
     def pop(self, index):
+        """
+        Removes the CreditCard from the given Index and returns the it
+
+        Args:
+            index (int)
+        
+        Returns:
+            CreditCard
+        """
+        
         if not isinstance(index, int):
             raise ValueError("Index must be a Integer Value")
         
@@ -100,6 +162,12 @@ class ListCC:
         return credit_card
                 
     def remove(self, id):
+        """
+        Removes the Credit Card of the given Account ID
+
+        Args:
+            id (str)
+        """
 
         index = self.index(id)
         
