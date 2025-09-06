@@ -13,6 +13,9 @@ class CustomList:
             
             self._list = wallet[:]
         
+    def display(self):
+        for card in self._list:
+            print(card)
         
     def add(self, credit_card):
         if not isinstance(credit_card, CreditCard):
@@ -96,9 +99,14 @@ class CustomList:
             j += 1
                 
         self._list = new_list
-            
-    def __str__(self):
-        for card in self._list:
-            print(card)
         
-        return f""
+    def __len__(self):
+        lenght = 0
+        for _ in self._list:
+            lenght += 1
+                
+        return lenght
+            
+    
+    def __str__(self):
+        return "[" + ", ".join(str(card) for card in self._list) + "]"
