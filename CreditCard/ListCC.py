@@ -1,4 +1,3 @@
-from operator import le
 from CreditCard import CreditCard
 
 class CustomList:
@@ -33,6 +32,19 @@ class CustomList:
         new_list[-1] = credit_card
         
         self._list = new_list
+        
+    def empty(self):
+        self._list = []
+        
+    def add_collection(self, collection):
+        if not isinstance(collection, list):
+            raise TypeError("Collection must be a List")
+        if any(not isinstance(x, CreditCard) for x in collection):
+            raise TypeError("Collection must contain Credit Card Objects")
+        
+        for i in collection:
+            self.add(i)
+        
         
                                    
     def __contains__(self, credit_card):
