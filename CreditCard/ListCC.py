@@ -1,22 +1,22 @@
 from CreditCard import CreditCard
 
-class Wallet:
+class CustomList:
     def __init__(self, wallet=None):
         if not (isinstance(wallet, list)) and (wallet is not None):
-            raise TypeError("Wallet must be A List or None")
+            raise TypeError("CustomList must be A List or None")
         
         if wallet is None:
             self._list = []
         else:
             if any(not isinstance(x, CreditCard) for x in wallet):
-                raise TypeError("Wallet Must Only Contain Credit Card Object")
+                raise TypeError("CustomList Must Only Contain Credit Card Object")
             
             self._list = wallet[:]
         
         
     def add(self, credit_card):
         if not isinstance(credit_card, CreditCard):
-            raise TypeError("ListCC Only Works with Credit Card Objects")
+            raise TypeError("CustomList Only Works with Credit Card Objects")
         
         initial_lenght = len(self._list)
         final_lenght = initial_lenght + 1
@@ -33,7 +33,7 @@ class Wallet:
                                    
     def __contains__(self, credit_card):
         if not isinstance(credit_card, CreditCard):
-            raise TypeError("ListCC Only Works with Credit Card Objects")
+            raise TypeError("CustomList Only Works with Credit Card Objects")
         
         for card in self._list:
             if credit_card == card:
@@ -49,14 +49,14 @@ class Wallet:
             if len(self._list) >= -(index):
                 return self._list[index]
             else:
-                raise IndexError(f"Index Not Found ListCC Contains {len(self._list)} items")
+                raise IndexError(f"Index Not Found CustomList Contains {len(self._list)} items")
             
         else:
             if len(self._list) > index:
                 return self._list[index]
             
             else:
-                raise IndexError(f"Index Not Found ListCC Contains {len(self._list)} items")
+                raise IndexError(f"Index Not Found CustomList Contains {len(self._list)} items")
             
     def __setitem__(self, index, value):
         if not isinstance(index, int):
@@ -68,14 +68,14 @@ class Wallet:
             if len(self._list) >= -(index):
                 self._list[index] = value
             else:
-                raise IndexError(f"Index Not Found ListCC Contains {len(self._list)} items")
+                raise IndexError(f"Index Not Found CustomList Contains {len(self._list)} items")
             
         else:
             if len(self._list) > index:
                 self._list[index] = value
             
             else:
-                raise IndexError(f"Index Not Found ListCC Contains {len(self._list)} items")
+                raise IndexError(f"Index Not Found CustomList Contains {len(self._list)} items")
             
     def __delitem__(self, index):
         if not isinstance(index, int):
@@ -85,7 +85,7 @@ class Wallet:
             index = len(self._list) + index
     
         if index < 0 or index >= len(self._list):
-            raise IndexError(f"Index Not Found. ListCC Contains {len(self._list)} items")
+            raise IndexError(f"Index Not Found. CustomList Contains {len(self._list)} items")
             
         new_list = [None] * (len(self._list) - 1)
         j = 0
