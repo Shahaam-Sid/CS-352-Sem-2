@@ -1,8 +1,17 @@
 from CreditCard import CreditCard
 
-class ListCC:
-    def __init__(self):
-        self._list = []
+class Wallet:
+    def __init__(self, wallet=None):
+        if not (isinstance(wallet, list)) and (wallet is not None):
+            raise TypeError("Wallet must be A List or None")
+        
+        if wallet is None:
+            self._list = []
+        else:
+            if any(not isinstance(x, CreditCard) for x in wallet):
+                raise TypeError("Wallet Must Only Contain Credit Card Object")
+            
+            self._list = wallet[:]
         
         
     def add(self, credit_card):
@@ -86,25 +95,10 @@ class ListCC:
             new_list[j] = self._list[i]
             j += 1
                 
+        self._list = new_list
             
     def __str__(self):
         for card in self._list:
             print(card)
         
         return f""
-            
-    
-    
-a = CreditCard("Muhammad Shahaam Siddiqui", "Habib Bank", "2411 0001 6101", 1000)
-b = CreditCard("Muhammad Hanzala Siddiqui", "UBL", "1001 1901 8765", 1000)
-c = CreditCard("Muhammad Umer Farooq", "NBP", "1000 0900 0040 0007", 1000)
-
-
-l = ListCC()
-
-l.add(a)
-l.add(b)
-l.add(c)
-l[2] = CreditCard('Taimoor', 'JS Bank', '9999', 100000)
-
-print(l)
