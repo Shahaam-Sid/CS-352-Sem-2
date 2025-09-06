@@ -1,3 +1,4 @@
+from operator import le
 from CreditCard import CreditCard
 
 class CustomList:
@@ -107,6 +108,13 @@ class CustomList:
                 
         return lenght
             
-    
+    def __reversed__(self):
+        n = len(self._list)
+        new_list = [None] * n
+        for i in range(n):
+            new_list[i] = self._list[n - 1 - i]
+            
+        self._list = new_list
+            
     def __str__(self):
         return "[" + ", ".join(str(card) for card in self._list) + "]"
