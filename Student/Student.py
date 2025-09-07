@@ -1,3 +1,6 @@
+from ast import List
+
+
 class Students:
     """
     A Class that Creates Student Objects
@@ -76,3 +79,35 @@ class Students:
     
     def __str__(self):
         return f"Name: {self.name}, Field: {self.field}, Semester: {self.sem}, Serial No.: {self.s_no}"
+    
+    
+class ListStudents:
+    def __init__(self, array = None):
+        
+        if array is None:
+            self._list = []
+        elif isinstance(array, list):
+            if any(not isinstance(x, Students) for x in array):
+                raise TypeError("Array must contain Student objects only")
+            self._list = array[:]
+        else:
+            raise TypeError("Array must be a list or None")
+            
+    def __contains__(self, student):
+        if not isinstance(student, Students):
+            raise TypeError("ListCC Only Works with Credit Card Objects")
+        
+        for card in self._list:
+            if student == card:
+                return True
+            
+        return False
+    
+    
+s1 = Students('Muhammad Shahaam Siddiqui', 'CS', 2, '0000001')
+s2 = Students('Muhammad Hanzala Siddiqui', 'DS', 1, "0000002")
+s3 = Students('Muhammad Umer Farooq', 'AI', 4, '0000003')
+
+l = ListStudents([s1, s2, s3])
+
+print("p" in l)
