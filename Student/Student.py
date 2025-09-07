@@ -139,8 +139,43 @@ class ListStudents:
             else:
                 raise IndexError(f"Index Not Found ListStudents Contains {len(self._list)} items")
     
+    def __delitem__(self, index):
+        if not isinstance(index, int):
+            raise TypeError("Index must be an integer")
+            
+        if index < 0:
+            index = len(self._list) + index
     
+        if index < 0 or index >= len(self._list):
+            raise IndexError(f"Index Not Found. ListStudents Contains {len(self._list)} items")
+            
+        new_list = [None] * (len(self._list) - 1)
+        j = 0
+        for i in range(len(self._list)):
+            if i == index:
+                continue
+            new_list[j] = self._list[i]
+            j += 1
+                
+        self._list = new_list    
     
+    def __len__(self):
+        lenght = 0
+        for _ in self._list:
+            lenght += 1
+                
+        return lenght    
+    
+    def __reversed__(self):
+        n = len(self._list)
+        new_list = [None] * n
+        for i in range(n):
+            new_list[i] = self._list[n - 1 - i]
+            
+        self._list = new_list
+        
+    def __str__(self):
+        return "[" + ", ".join(str(card) for card in self._list) + "]"
     
 s1 = Students('Muhammad Shahaam Siddiqui', 'CS', 2, '0000001')
 s2 = Students('Muhammad Hanzala Siddiqui', 'DS', 1, "0000002")
@@ -148,5 +183,6 @@ s3 = Students('Muhammad Umer Farooq', 'AI', 4, '0000003')
 
 l = ListStudents([s1, s2, s3])
 
-l[1] = s1
-print(l[1])
+reversed(l)
+
+print(l)
