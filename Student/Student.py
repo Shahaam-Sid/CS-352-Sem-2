@@ -92,6 +92,44 @@ class ListStudents:
             self._list = array[:]
         else:
             raise TypeError("Array must be a list or None")
+        
+    def display(self):
+        """
+        Displays Students
+        """
+        
+        print("No. of Students:", len(self))
+        for card in self._list:
+            print(card)
+            
+    def admit(self, student):
+        """
+        Creates a new index and adds Student
+        Args:
+            student (Student)
+
+        """
+
+        if not isinstance(student, Students):
+            raise TypeError("ListStudents Only Works with Students Objects")
+        
+        initial_lenght = len(self._list)
+        final_lenght = initial_lenght + 1
+        
+        new_list = [None] * final_lenght
+        
+        for i in range(initial_lenght):
+            new_list[i] = self._list[i]
+            
+        new_list[-1] = student
+        
+        self._list = new_list
+        
+    def clear_all(self):
+        """
+        Empties the List
+        """
+        self._list = []
             
     def __contains__(self, student):
         if not isinstance(student, Students):
@@ -183,6 +221,5 @@ s3 = Students('Muhammad Umer Farooq', 'AI', 4, '0000003')
 
 l = ListStudents([s1, s2, s3])
 
-reversed(l)
-
-print(l)
+l.clear_all()
+l.display()
