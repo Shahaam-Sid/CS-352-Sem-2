@@ -143,7 +143,7 @@ class ListCC:
         
     def pop(self, index):
         """
-        Removes the CreditCard from the given Index and returns the it
+        Removes the CreditCard from the given Index and returns it
 
         Args:
             index (int)
