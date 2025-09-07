@@ -202,6 +202,38 @@ class ListStudents:
         for i in collection:
             self.admit(i)
             
+    def pop(self, index):
+        """
+        Removes the Student from the given Index and returns the
+
+        Args:
+            index (int)
+        
+        Returns:
+            Student
+        """
+        
+        if not isinstance(index, int):
+            raise ValueError("Index must be a Integer Value")
+        
+        credit_card = self._list[index]
+        
+        del self[index]
+        
+        return credit_card
+    
+    def remove(self, id):
+        """
+        Removes the Student of the given Serial No.
+
+        Args:
+            id (str)
+        """
+
+        index = self.index(id)
+        
+        del self[index]
+            
     def __contains__(self, student):
         if not isinstance(student, Students):
             raise TypeError("ListStudents Only Works with Credit Card Objects")
@@ -291,9 +323,5 @@ s2 = Students('Muhammad Hanzala Siddiqui', 'DS', 1, "0000002")
 s3 = Students('Muhammad Umer Farooq', 'AI', 4, '0000003')
 
 l = ListStudents([s1, s2, s3])
-l.include([Students('Owais', 'SE', 5, '0000005'), Students('Abdullah', 'DS', 6, '0000007')])
-print(l.index('0000003'))
-
-
-
-l.display()
+l.remove('0000001')
+print(l)
