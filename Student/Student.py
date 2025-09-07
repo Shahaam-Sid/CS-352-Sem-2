@@ -130,6 +130,61 @@ class ListStudents:
         Empties the List
         """
         self._list = []
+   
+    def index(self, id):
+        """
+        Returns the Index of The Given Serial No.
+
+        Args:
+            id (str)
+
+        Returns:
+            int
+        """
+        if not isinstance(id, str):
+            raise TypeError('Serial Number must be a String')
+        if not id.isdecimal:
+            raise ValueError('Serial Number must only contain Integers')
+        if not len(id) == 7:
+            raise ValueError('Serial Number must contain 7 digits')
+        
+        for i in range(len(self._list)):
+            if self._list[i].s_no == id:
+                return i
+            
+        raise ValueError("ID Not Matched | Credit Card Not Found")
+        
+    def put(self, index, student):
+        """
+        Inserts the Student to the
+        given Index
+
+        Args:
+            index (int)
+            student (Student)
+        """
+        
+        if not isinstance(index, int):
+            raise TypeError("Index must be an Integer Value")
+        if not isinstance(student, Students):
+            raise TypeError("Can only insert Students object")
+        
+        n = len(self._list)
+        
+        if index < 0:
+            index = n + index
+        
+        new_list = [None] * (n + 1)
+        
+        for i in range(n + 1):
+            if i < index:
+                new_list[i] = self._list[i]
+            if i == index:
+                new_list[i] = student
+            if i > index:
+                new_list[i] = self._list[i - 1]
+                
+        self._list = new_list
             
     def __contains__(self, student):
         if not isinstance(student, Students):
@@ -220,6 +275,9 @@ s2 = Students('Muhammad Hanzala Siddiqui', 'DS', 1, "0000002")
 s3 = Students('Muhammad Umer Farooq', 'AI', 4, '0000003')
 
 l = ListStudents([s1, s2, s3])
+l.put(2, Students('Owais', 'SE', 5, '0000005'))
+print(l.index('0000003'))
 
-l.clear_all()
+
+
 l.display()
