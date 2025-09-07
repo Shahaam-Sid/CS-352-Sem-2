@@ -185,6 +185,22 @@ class ListStudents:
                 new_list[i] = self._list[i - 1]
                 
         self._list = new_list
+        
+    def include(self, collection):
+        """
+        Adds the entered List of Students to the
+            end of the existing list
+
+        Args:
+            collection (List)
+        """
+        if not isinstance(collection, list):
+            raise TypeError("Collection must be a List")
+        if any(not isinstance(x, Students) for x in collection):
+            raise TypeError("Collection must Only contain Students Objects")
+        
+        for i in collection:
+            self.admit(i)
             
     def __contains__(self, student):
         if not isinstance(student, Students):
@@ -275,7 +291,7 @@ s2 = Students('Muhammad Hanzala Siddiqui', 'DS', 1, "0000002")
 s3 = Students('Muhammad Umer Farooq', 'AI', 4, '0000003')
 
 l = ListStudents([s1, s2, s3])
-l.put(2, Students('Owais', 'SE', 5, '0000005'))
+l.include([Students('Owais', 'SE', 5, '0000005'), Students('Abdullah', 'DS', 6, '0000007')])
 print(l.index('0000003'))
 
 
