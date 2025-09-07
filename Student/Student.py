@@ -95,7 +95,7 @@ class ListStudents:
             
     def __contains__(self, student):
         if not isinstance(student, Students):
-            raise TypeError("ListCC Only Works with Credit Card Objects")
+            raise TypeError("ListStudents Only Works with Credit Card Objects")
         
         for card in self._list:
             if student == card:
@@ -109,5 +109,3 @@ s2 = Students('Muhammad Hanzala Siddiqui', 'DS', 1, "0000002")
 s3 = Students('Muhammad Umer Farooq', 'AI', 4, '0000003')
 
 l = ListStudents([s1, s2, s3])
-
-print("p" in l)
