@@ -1,5 +1,17 @@
 class Students:
+    """
+    A Class that Creates Student Objects
+    """
+    
     def __init__(self, name, field, sem, s_no):
+        """
+        Args:
+            name (str)
+            field (str): Can only be 'CS', 'DS, 'SE', 'AI'
+            sem (int): Can only be 1 to 8
+            s_no (str): Must contain 7 digits
+        """
+        
         self.name = name
         self.field = field
         self.sem = sem
@@ -64,11 +76,3 @@ class Students:
     
     def __str__(self):
         return f"Name: {self.name}, Field: {self.field}, Semester: {self.sem}, Serial No.: {self.s_no}"
-    
-    
-
-std1 = Students('Muhammad Shahaam Siddiqui', 'CS', 2, '1234567')
- 
-std1.s_no = '00000070'
-
-print(std1)
