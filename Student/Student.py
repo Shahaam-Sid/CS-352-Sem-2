@@ -1,6 +1,3 @@
-from ast import List
-
-
 class Students:
     """
     A Class that Creates Student Objects
@@ -70,7 +67,7 @@ class Students:
     def s_no(self, value):
         if not isinstance(value, str):
             raise TypeError('Serial Number must be a String')
-        if not value.isdecimal:
+        if not value.isdecimal():
             raise ValueError('Serial Number must obly contain Integers')
         if not len(value) == 7:
             raise ValueError('Serial Number must contain 7 digits')
@@ -79,6 +76,10 @@ class Students:
     
     def __str__(self):
         return f"Name: {self.name}, Field: {self.field}, Semester: {self.sem}, Serial No.: {self.s_no}"
+    
+    def __repr__(self):
+        return f"Students(name='{self.name}', field='{self.field}', sem={self.sem}, s_no='{self.s_no}')"
+
     
     
 class ListStudents:
@@ -234,6 +235,48 @@ class ListStudents:
         
         del self[index]
             
+    def get_field(self, f):
+        """
+        Returns a List of the Selected Field
+
+        Args:
+            f (str): can only be 'CS', 'SE', 'AI', 'DS'
+
+        Returns:
+            ListStudents
+        """
+        
+        if not isinstance(f, str):
+            raise TypeError('Field must be a String')
+        if f not in ['CS', 'SE', 'AI', 'DS']:
+            raise ValueError("Invalid Field | Valid: ['CS', 'SE', 'AI', 'DS']")
+                
+        return ListStudents([student for student in self._list if student.field == f])
+    
+    def sort(self):
+        """
+        Sorts by Field inOrder of:
+            1. CS
+            2. SE
+            3. AI
+            4. DS
+
+        Returns:
+            ListStudents
+        """
+        cs = self.get_field('CS')
+        se = self.get_field('SE')
+        ai = self.get_field('AI')
+        ds = self.get_field('DS')
+        
+        new_list = []
+        new_list.extend(cs._list)
+        new_list.extend(se._list)
+        new_list.extend(ai._list)
+        new_list.extend(ds._list)
+        
+        return ListStudents(new_list)
+        
     def __contains__(self, student):
         if not isinstance(student, Students):
             raise TypeError("ListStudents Only Works with Credit Card Objects")
@@ -317,11 +360,3 @@ class ListStudents:
         
     def __str__(self):
         return "[" + ", ".join(str(card) for card in self._list) + "]"
-    
-s1 = Students('Muhammad Shahaam Siddiqui', 'CS', 2, '0000001')
-s2 = Students('Muhammad Hanzala Siddiqui', 'DS', 1, "0000002")
-s3 = Students('Muhammad Umer Farooq', 'AI', 4, '0000003')
-
-l = ListStudents([s1, s2, s3])
-l.remove('0000001')
-print(l)
