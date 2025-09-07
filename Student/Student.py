@@ -103,9 +103,50 @@ class ListStudents:
             
         return False
     
+    def __getitem__(self, index):
+        if not isinstance(index, int):
+            raise TypeError("Index must be an integer")
+        
+        if index < 0:
+            if len(self._list) >= -(index):
+                return self._list[index]
+            else:
+                raise IndexError(f"Index Not Found ListStudents Contains {len(self._list)} items")
+            
+        else:
+            if len(self._list) > index:
+                return self._list[index]
+            
+            else:
+                raise IndexError(f"Index Not Found ListStudents Contains {len(self._list)} items")    
+    
+    def __setitem__(self, index, value):
+        if not isinstance(index, int):
+            raise TypeError("Index must be an integer")
+        if not isinstance(value, Students):
+            raise TypeError("Value must be Student Object")
+        
+        if index < 0:
+            if len(self._list) >= -(index):
+                self._list[index] = value
+            else:
+                raise IndexError(f"Index Not Found ListStudents Contains {len(self._list)} items")
+            
+        else:
+            if len(self._list) > index:
+                self._list[index] = value
+            
+            else:
+                raise IndexError(f"Index Not Found ListStudents Contains {len(self._list)} items")
+    
+    
+    
     
 s1 = Students('Muhammad Shahaam Siddiqui', 'CS', 2, '0000001')
 s2 = Students('Muhammad Hanzala Siddiqui', 'DS', 1, "0000002")
 s3 = Students('Muhammad Umer Farooq', 'AI', 4, '0000003')
 
 l = ListStudents([s1, s2, s3])
+
+l[1] = s1
+print(l[1])
