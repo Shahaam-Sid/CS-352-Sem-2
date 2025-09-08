@@ -217,11 +217,11 @@ class ListStudents:
         if not isinstance(index, int):
             raise ValueError("Index must be a Integer Value")
         
-        credit_card = self._list[index]
+        student = self._list[index]
         
         del self[index]
         
-        return credit_card
+        return student
     
     def remove(self, id):
         """
