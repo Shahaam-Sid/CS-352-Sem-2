@@ -1,0 +1,39 @@
+## Turtle
+### CS-352 Lab Task
+
+#### Functionality
+This project simulates a turtle graphics system where a turtle moves on a canvas with a pen, drawing shapes and patterns (like squares and zigzags) based on given commands.
+
+#### Contains Classes
+1. Point  
+2. Line  
+3. Pen  
+4. Canvas
+5. Turtle
+6. App
+
+#### UML
+![UML Diagram](UML.jpg)
+
+#### Project Structure
+
+```
+Turtle
+│   main.py
+│   README.md
+│   UML.jpg
+│
+├───app
+│       app.py
+│
+├───canvas
+│       Canvas.py
+│
+├───geometry
+│       Line.py
+│       Pen.py
+│       Point.py
+│
+└───Turtle
+        turtle.py
+```
