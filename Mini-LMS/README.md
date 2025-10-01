@@ -4,7 +4,7 @@
 
 
 ### UML
-![Mini LMS UML](/UML.jpg)
+![Mini LMS UML](UML.jpg)
 
 
 ### Project Structure

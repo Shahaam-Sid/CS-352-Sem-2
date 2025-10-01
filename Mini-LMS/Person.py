@@ -1,11 +1,12 @@
 from Course import CourseList
 
 class Person:
-    def __init__(self, name, age, contact, mail):
+    def __init__(self, name, age, contact, mail, courses):
         self.name = name
         self.age = age
         self.contact = contact
         self.mail = mail
+        self.courses = courses
         
         
     @property
@@ -78,18 +79,29 @@ class Person:
         
         self.__mail = value
         
+    @property
+    def courses(self):
+        return self.__courses
+    
+    @courses.setter
+    def courses(self, course_list):
+        if not isinstance(course_list, CourseList):
+            raise TypeError('Courses must be a CourseList Value')
+        
+        self.__courses = course_list
+        
     def __str__(self):
-        return f"Name: {self.name}, Age: {self.age}, Contact: {self.contact}, E-Mail: {self.mail}"
+        return f"""Name: {self.name}, Age: {self.age}, Contact: {self.contact}, E-Mail: {self.mail}
+Courses: {self.courses}"""
     
 
 class Student(Person):
     def __init__(self, name, age, contact, mail, seat_no, sem, field, courses):
-        super().__init__(name, age, contact, mail)
+        super().__init__(name, age, contact, mail, courses)
         
         self.seat_no = seat_no
         self.sem = sem
         self.field = field
-        self.courses = courses
         
     @property
     def seat_no(self):
@@ -131,31 +143,71 @@ class Student(Person):
         if not isinstance(value, str):
             raise TypeError('Field must be a String Value')
         if value not in {'CS', 'SE', 'AI'}:
-            raise ValueError("Invalid Field, Valid option are: CS, SE, AI")
+            raise ValueError("Invalid Field, Valid options are: CS, SE, AI")
         
         self.__field = value
-        
-    @property
-    def courses(self):
-        return self.__courses
-    
-    @courses.setter
-    def courses(self, course_list):
-        if not isinstance(course_list, CourseList):
-            raise TypeError('Courses must be a CourseList Value')
-        
-        self.__courses = course_list
         
     def update(self, **attributes):
         for key, value in attributes.items():
             if hasattr(self, key):
                 setattr(self, key, value)
             else:
-                raise AttributeError(f'Invalid Argument: {key}')
+                raise AttributeError(f"""Invalid Argument: {key}
+Valid Arguments: name, age, contact, mail, seat_no, sem, field, courses""")
             
     def __str__(self):
         return f"""Name: {self.name}    Age: {self.age}
 Seat No: {self.seat_no}    Field: {self.field}
-Semester: {self.sem}    Courses: {self.courses}
 Contact: {self.contact}    E-Mail: {self.mail}
-"""
+Semester: {self.sem}
+Courses: {self.courses}"""
+
+class Teacher(Person):
+    def __init__(self, name, age, contact, mail, id_no, rank, courses):
+        super().__init__(name, age, contact, mail, courses)
+        self.id_no = id_no
+        self.rank = rank
+        
+    @property
+    def id_no(self):
+        return self.__id_no
+    
+    @id_no.setter
+    def id_no(self, value):
+        if not isinstance(value, str):
+            raise TypeError('ID No. must be a String Value')
+        value = value.upper()
+        if not value.isalnum():
+            raise ValueError('ID No. must only consist of Alphabets and Number')
+        if len(value) != 5:
+            raise ValueError('ID No. must consist of 5 Characters')
+        
+        self.__id_no = value
+        
+    @property
+    def rank(self):
+        return self.__rank
+    
+    @rank.setter
+    def rank(self, value):
+        if not isinstance(value, str):
+            raise TypeError('Rank must be a String Value')
+        if value not in {'Associate Professor', 'Assistant Professor', 'Lecturer', 'Teaching Associate', 'Visiting Faculty'}:
+            raise ValueError("""Invalid Rank, Valid options are :
+Associate Professor, Assistant Professor, Lecturer, Teaching Associate, Visiting Faculty""")
+            
+        self.__rank = value
+        
+    def update(self, **attributes):
+        for key, value in attributes.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
+            else:
+                raise AttributeError(f"""Invalid Argument: {key}
+Valid Arguments: name, age, contact, mail, id_no, rank, courses""")
+            
+    def __str__(self):
+        return f"""Name: {self.name}    Age: {self.age}
+ID No: {self.id_no}    Rank: {self.rank}
+Contact: {self.contact}    E-Mail: {self.mail}
+Courses: {self.courses}"""
