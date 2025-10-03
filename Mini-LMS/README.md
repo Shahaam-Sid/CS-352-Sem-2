@@ -10,10 +10,14 @@
 ### Project Structure
 ```
 Mini-LMS
-    Course.py
-    main.py
-    Person.py
-    PersonLists.py
-    README.md
-    UML.jpg
+│   main.py
+│   README.md
+│   UML.jpg
+│   UML.pptx
+│
+└───lms
+        Course.py
+        Person.py
+        __init__.py
+
 ```
