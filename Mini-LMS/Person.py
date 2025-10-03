@@ -1,7 +1,14 @@
+from abc import ABC
 from Course import CourseList
 
-class Person:
+class Person(ABC):
+    
+    attributes = "name, age, contact, mail, courses"
+    
     def __init__(self, name, age, contact, mail, courses):
+        if self.__class__ is Person:
+            raise TypeError("Person Class cannot be Instantiated")
+        
         self.name = name
         self.age = age
         self.contact = contact
@@ -90,12 +97,23 @@ class Person:
         
         self.__courses = course_list
         
+    def update(self, **attr):
+        for key, value in attr.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
+            else:
+                raise AttributeError(f"""Invalid Argument '{key}'
+Valid Arguments: {self.__class__.attributes}""")
+        
     def __str__(self):
         return f"""Name: {self.name}, Age: {self.age}, Contact: {self.contact}, E-Mail: {self.mail}
 Courses: {self.courses}"""
     
 
 class Student(Person):
+    
+    attributes = "name, age, contact, mail, seat_no, sem, field, courses"
+    
     def __init__(self, name, age, contact, mail, seat_no, sem, field, courses):
         super().__init__(name, age, contact, mail, courses)
         
@@ -146,14 +164,6 @@ class Student(Person):
             raise ValueError("Invalid Field, Valid options are: CS, SE, AI")
         
         self.__field = value
-        
-    def update(self, **attributes):
-        for key, value in attributes.items():
-            if hasattr(self, key):
-                setattr(self, key, value)
-            else:
-                raise AttributeError(f"""Invalid Argument: {key}
-Valid Arguments: name, age, contact, mail, seat_no, sem, field, courses""")
             
     def __str__(self):
         return f"""Name: {self.name}    Age: {self.age}
@@ -163,6 +173,9 @@ Semester: {self.sem}
 Courses: {self.courses}"""
 
 class Teacher(Person):
+    
+    attributes = "name, age, contact, mail, id_no, rank, courses"
+    
     def __init__(self, name, age, contact, mail, id_no, rank, courses):
         super().__init__(name, age, contact, mail, courses)
         self.id_no = id_no
@@ -197,14 +210,6 @@ class Teacher(Person):
 Associate Professor, Assistant Professor, Lecturer, Teaching Associate, Visiting Faculty""")
             
         self.__rank = value
-        
-    def update(self, **attributes):
-        for key, value in attributes.items():
-            if hasattr(self, key):
-                setattr(self, key, value)
-            else:
-                raise AttributeError(f"""Invalid Argument: {key}
-Valid Arguments: name, age, contact, mail, id_no, rank, courses""")
             
     def __str__(self):
         return f"""Name: {self.name}    Age: {self.age}
