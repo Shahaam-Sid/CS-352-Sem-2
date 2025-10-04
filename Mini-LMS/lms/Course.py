@@ -1,15 +1,14 @@
 class Course:
     
-    attributes = "course_id, course_name, course_book, credit_hours, semester, is_optional, teachers"
+    attributes = "course_id, course_name, course_book, credit_hours, semester, is_optional"
     
-    def __init__(self, course_id, course_name, course_book, credit_hours, semester, is_optional, teachers):
+    def __init__(self, course_id, course_name, course_book, credit_hours, semester, is_optional):
         self.course_id = course_id
         self.course_name = course_name
         self.course_book = course_book
         self.credit_hours = credit_hours
         self.semester = semester
         self.is_optional = is_optional
-        self.teachers = teachers
         
     @property
     def course_id(self):
@@ -93,18 +92,6 @@ class Course:
             raise TypeError('Must be an Boolean Value')
         
         self.__is_optional = value
-        
-    @property
-    def teachers(self):
-        return self.__teachers
-    
-    @teachers.setter
-    def teachers(self, value):
-        from .Person import Faculty
-        if not isinstance(value, Faculty):
-            raise TypeError('Teachers must be a Faculty Object Value')
-        
-        self.__teachers = value
     
     def update(self, **attr):
         for key, value in attr.items():
@@ -117,13 +104,7 @@ Valid Arguments: {self.__class__.attributes}""")
     def __str__(self):
         return f"""Course Name: {self.course_name}  Course ID: {self.course_id}
 Credit Hours: {self.credit_hours}     Course Book: {self.course_book}
-Semester: {self.semester}   Optional: {self.is_optional}
-Teachers: {', '.join(x.name for x in self.teachers)}
-"""
-
-        
-    
-        
+Semester: {self.semester}   Optional: {self.is_optional}"""    
     
 class CourseList:
     def __init__(self, array = None):
@@ -199,6 +180,37 @@ class CourseList:
         index = self.index(id)
         
         del self[index]
+        
+    def update_element(self, by, **attr):
+        if not isinstance(by, list):
+            raise TypeError('by must be a List')
+        if len(by) != 2:
+            raise ValueError("by must be in this format, [name or course_id, 'course name or course id']")
+        
+        ind = None
+        
+        if by[0] == 'name':
+            
+            if not isinstance(by[1], str):
+                raise TypeError('Course Name must be a String Value')
+            by[1].strip()
+            if len(by[1]) < 3 or len(by[1]) > 50:
+                raise ValueError('Course Name is Too Short/Long')
+            
+            for i in range(len(self._list)):
+                if self._list[i].course_name == by[1]:
+                    ind = i
+            
+            if ind == None:
+                raise ValueError("Name Not Matched | Course Not Found")
+        
+        elif by[0] == 'course_id':
+            ind = self.index(by[1])
+        
+        else:
+            raise AttributeError('Can Only Update by Course Name(course_name) or Course ID(course_id)')
+            
+        self[ind].update(**attr)
         
     def __contains__(self, crs):
         if not isinstance(crs, Course):
