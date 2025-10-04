@@ -1,17 +1,20 @@
-from Person import Student, Teacher
-from Course import CourseList
+from lms.Person import Student, Teacher, Batch, Faculty
+from lms.Course import Course, CourseList
 
 def run():
     try:
-        courses = CourseList()
-        a = Student('Muhammad Shahaam Siddiqui', 20, '03180000000', 'muhammadgc821@gmail.com',
-                    'B2611000000', 2, 'CS', courses)
+        y1_s1 = CourseList()
+        tch1 = Teacher('Badr Sami', 65, '03000000000', 'badrsami@yahoo.com', 'AP001', 'Associate Professor', y1_s1)
+        tch2 = Teacher('Nadeem Mehmoud', 59, '03000000001', 'NadeemM@hotmail.com', 'AP002', 'Associate Professor', y1_s1)
+        tch3 = Teacher('Humera Tariq', 46, '03110000000', 'humeraaa@gmail.com', 'TH009', 'Lecturer', y1_s1)
+        tch4 = Teacher('Bari Ahmed Khan', 38, '03990000000', 'bak@mail.com', 'TA030', 'Teaching Associate', y1_s1)
         
-        c = Teacher('Nadeem Mehmood', 55, '03120000000', 'nadeem@hotmail.com', 'AP007', 'Associate Professor', courses)
+        fc = Faculty([tch1, tch2, tch3])
+        fc.place(1, tch4)
+        fc.remove('TA030')
+        print(len(fc))
         
-        a.update(name='Badr Sami')
         
-        print(a)
         
     except TypeError as e:
         print('Type Error:', e)
