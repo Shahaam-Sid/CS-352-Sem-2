@@ -13,11 +13,9 @@ Mini-LMS
 │   main.py
 │   README.md
 │   UML.jpg
-│   UML.pptx
 │
 └───lms
         Course.py
         Person.py
         __init__.py
-
 ```

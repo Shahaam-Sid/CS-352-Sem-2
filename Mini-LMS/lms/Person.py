@@ -107,7 +107,8 @@ class Person(ABC):
 Valid Arguments: {self.__class__.attributes}""")
         
     def __str__(self):
-        return f"""Name: {self.name}, Age: {self.age}, Contact: {self.contact}, E-Mail: {self.mail}
+        return f"""Name: {self.name}   Age: {self.age}
+Contact: {self.contact}    E-Mail: {self.mail}
 Courses: {self.courses}"""
     
 
@@ -234,8 +235,11 @@ class Batch:
     def display(self):
         
         print("No. of Students:", len(self))
-        for card in self._list:
-            print(card)
+        for std in self._list:
+            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+            print(std)
+            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+        print("++++++END OF LIST++++++")
             
     def admit(self, student):
 
@@ -258,36 +262,313 @@ class Batch:
         
         self._list = []
         
-    def index(self, seat_no):
+    def index(self, s_no):
 
-        if not isinstance(value, str):
+        if not isinstance(s_no, str):
             raise TypeError('Seat No. must be a String Value')
-        value = value.upper()
-        if not value.isalnum():
+        s_no = s_no.upper()
+        if not s_no.isalnum():
             raise ValueError('Seat No. must only consist of Alphabets and Number')
-        if len(value) != 11:
+        if len(s_no) != 11:
             raise ValueError('Seat No. must consist of 11 Characters')
-        if value[0] != 'B':
+        if s_no[0] != 'B':
             raise ValueError('Incorrect Seat No. Format')
         
         for i in range(len(self._list)):
-            if self._list[i].seat_no == id:
+            if self._list[i].seat_no == s_no:
                 return i
             
         raise ValueError("Seat No. Not Matched | Student Not Found")
+    
+    def put(self, index, std):
         
+        if not isinstance(index, int):
+            raise TypeError("Index must be an Integer Value")
+        if not isinstance(std, Student):
+            raise TypeError("Can only insert Students object")
         
+        n = len(self._list)
         
+        if index < 0:
+            index = n + index
         
+        new_list = [None] * (n + 1)
         
+        for i in range(n + 1):
+            if i < index:
+                new_list[i] = self._list[i]
+            if i == index:
+                new_list[i] = std
+            if i > index:
+                new_list[i] = self._list[i - 1]
+                
+        self._list = new_list
         
+    def pop(self, index):
         
+        if not isinstance(index, int):
+            raise ValueError("Index must be a Integer Value")
         
+        std = self._list[index]
         
+        del self[index]
+        
+        return std
+    
+    def remove(self, id):
+
+        index = self.index(id)
+        
+        del self[index]
+    
+    def __contains__(self, std):
+        if not isinstance(std, Student):
+            raise TypeError("Batch Only Works with Student Objects")
+        
+        for value in self._list:
+            if std == value:
+                return True
+            
+        return False
+    
+    def __getitem__(self, index):
+        if not isinstance(index, int):
+            raise TypeError("Index must be an integer")
+        
+        if index < 0:
+            if len(self._list) >= -(index):
+                return self._list[index]
+            else:
+                raise IndexError(f"Index Not Found Batch Contains {len(self._list)} items")
+            
+        else:
+            if len(self._list) > index:
+                return self._list[index]
+            
+            else:
+                raise IndexError(f"Index Not Found Batch Contains {len(self._list)} items") 
+            
+    def __setitem__(self, index, value):
+        if not isinstance(index, int):
+            raise TypeError("Index must be an integer")
+        if not isinstance(value, Student):
+            raise TypeError("Value must be Student Object")
+        
+        if index < 0:
+            if len(self._list) >= -(index):
+                self._list[index] = value
+            else:
+                raise IndexError(f"Index Not Found Batch Contains {len(self._list)} items")
+            
+        else:
+            if len(self._list) > index:
+                self._list[index] = value
+            
+            else:
+                raise IndexError(f"Index Not Found Batch Contains {len(self._list)} items")
+            
+    def __delitem__(self, index):
+        if not isinstance(index, int):
+            raise TypeError("Index must be an integer")
+            
+        if index < 0:
+            index = len(self._list) + index
+    
+        if index < 0 or index >= len(self._list):
+            raise IndexError(f"Index Not Found Batch Contains {len(self._list)} items")
+            
+        new_list = [None] * (len(self._list) - 1)
+        j = 0
+        for i in range(len(self._list)):
+            if i == index:
+                continue
+            new_list[j] = self._list[i]
+            j += 1
+                
+        self._list = new_list
+    
+    def __len__(self):
+        lenght = 0
+        for _ in self._list:
+            lenght += 1
+                
+        return lenght
+    
+    def __str__(self):
+        return "[" + ", ".join(str(std) for std in self._list) + "]"
         
     
 class Faculty:
-    def __init__(self):
-        pass
+    def __init__(self, array = None):
+        
+        if array is None:
+            self._list = []
+        elif isinstance(array, list):
+            if any(not isinstance(x, Teacher) for x in array):
+                raise TypeError("Array must contain Teacher objects only")
+            self._list = array[:]
+        else:
+            raise TypeError("Array must be a list or None")
+        
+    def display(self):
+        
+        print("No. of Teachers:", len(self))
+        for tch in self._list:
+            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+            print(tch)
+            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+        print("++++++END OF LIST++++++")
+        
+    def register(self, tch):
+
+        if not isinstance(tch, Teacher):
+            raise TypeError("Faculty Only Works with Teacher Objects")
+        
+        initial_lenght = len(self._list)
+        final_lenght = initial_lenght + 1
+        
+        new_list = [None] * final_lenght
+        
+        for i in range(initial_lenght):
+            new_list[i] = self._list[i]
+            
+        new_list[-1] = tch
+        
+        self._list = new_list
+        
+    def clear_all(self):
+        
+        self._list = []
+        
+    def index(self, i_no):
+
+        if not isinstance(i_no, str):
+            raise TypeError('ID No. must be a String Value')
+        i_no = i_no.upper()
+        if not i_no.isalnum():
+            raise ValueError('ID No. must only consist of Alphabets and Number')
+        if len(i_no) != 5:
+            raise ValueError('ID No. must consist of 5 Characters')
+        
+        for i in range(len(self._list)):
+            if self._list[i].id_no == i_no:
+                return i
+            
+        raise ValueError("ID No. Not Matched | Teacher Not Found")
+    
+    def place(self, index, tch):
+        
+        if not isinstance(index, int):
+            raise TypeError("Index must be an Integer Value")
+        if not isinstance(tch, Teacher):
+            raise TypeError("Can only insert Teacher object")
+        
+        n = len(self._list)
+        
+        if index < 0:
+            index = n + index
+        
+        new_list = [None] * (n + 1)
+        
+        for i in range(n + 1):
+            if i < index:
+                new_list[i] = self._list[i]
+            if i == index:
+                new_list[i] = tch
+            if i > index:
+                new_list[i] = self._list[i - 1]
+                
+        self._list = new_list
+        
+    def pop(self, index):
+        
+        if not isinstance(index, int):
+            raise ValueError("Index must be a Integer Value")
+        
+        std = self._list[index]
+        
+        del self[index]
+        
+        return std
+    
+    def remove(self, id):
+
+        index = self.index(id)
+        
+        del self[index]
+        
+    def __contains__(self, tch):
+        if not isinstance(tch, Teacher):
+            raise TypeError("Faculty Only Works with Faculty Objects")
+        
+        for value in self._list:
+            if tch == value:
+                return True
+            
+        return False
+        
+    def __getitem__(self, index):
+        if not isinstance(index, int):
+            raise TypeError("Index must be an integer")
+        
+        if index < 0:
+            if len(self._list) >= -(index):
+                return self._list[index]
+            else:
+                raise IndexError(f"Index Not Found Faculty Contains {len(self._list)} items")
+            
+        else:
+            if len(self._list) > index:
+                return self._list[index]
+            
+            else:
+                raise IndexError(f"Index Not Found Faculty Contains {len(self._list)} items") 
+        
+    def __setitem__(self, index, value):
+        if not isinstance(index, int):
+            raise TypeError("Index must be an integer")
+        if not isinstance(value, Teacher):
+            raise TypeError("Value must be Teacher Object")
+        
+        if index < 0:
+            if len(self._list) >= -(index):
+                self._list[index] = value
+            else:
+                raise IndexError(f"Index Not Found Faculty Contains {len(self._list)} items")
+            
+        else:
+            if len(self._list) > index:
+                self._list[index] = value
+            
+            else:
+                raise IndexError(f"Index Not Found Faculty Contains {len(self._list)} items")
+        
+    def __delitem__(self, index):
+        if not isinstance(index, int):
+            raise TypeError("Index must be an integer")
+            
+        if index < 0:
+            index = len(self._list) + index
+    
+        if index < 0 or index >= len(self._list):
+            raise IndexError(f"Index Not Found Faculty Contains {len(self._list)} items")
+            
+        new_list = [None] * (len(self._list) - 1)
+        j = 0
+        for i in range(len(self._list)):
+            if i == index:
+                continue
+            new_list[j] = self._list[i]
+            j += 1
+                
+        self._list = new_list
+    
+    def __len__(self):
+        lenght = 0
+        for _ in self._list:
+            lenght += 1
+                
+        return lenght
+    
     def __str__(self):
-        return 'Under Construction'
+        return "[" + ", ".join(str(tch) for tch in self._list) + "]"
