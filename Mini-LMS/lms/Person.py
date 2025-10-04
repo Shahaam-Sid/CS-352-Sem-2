@@ -109,7 +109,7 @@ Valid Arguments: {self.__class__.attributes}""")
     def __str__(self):
         return f"""Name: {self.name}   Age: {self.age}
 Contact: {self.contact}    E-Mail: {self.mail}
-Courses: {self.courses}"""
+Courses: {', '.join(x.course_name for x in self.courses)}"""
     
 
 class Student(Person):
@@ -172,7 +172,7 @@ class Student(Person):
 Seat No: {self.seat_no}    Field: {self.field}
 Contact: {self.contact}    E-Mail: {self.mail}
 Semester: {self.sem}
-Courses: {self.courses}"""
+Courses: {', '.join(x.course_name for x in self.courses)}"""
 
 class Teacher(Person):
     
@@ -217,7 +217,7 @@ Associate Professor, Assistant Professor, Lecturer, Teaching Associate, Visiting
         return f"""Name: {self.name}    Age: {self.age}
 ID No: {self.id_no}    Rank: {self.rank}
 Contact: {self.contact}    E-Mail: {self.mail}
-Courses: {self.courses}"""
+Courses: {', '.join(x.course_name for x in self.courses)}"""
 
 
 class Batch:
