@@ -148,21 +148,49 @@ class CourseList:
         
         self._list = []
         
-    def index(self, c_id):
-
-        if not isinstance(c_id, str):
-            raise TypeError('Course ID must be a String Value')
-        c_id = c_id.upper()
-        if not c_id.isalnum():
-            raise ValueError('Course ID must only consist of Alphabets and Numbers')
-        if len(c_id) != 5:
-            raise ValueError('Course ID must consist of 5 Characters')
+    def index(self, by):
         
-        for i in range(len(self._list)):
-            if self._list[i].course_id == c_id:
-                return i
+        if not isinstance(by, list):
+            raise TypeError('by must be a List')
+        if len(by) != 2:
+            raise ValueError("by must be in this format, [name or course_id, 'course name or course id']")
+        
+        ind = None
+        
+        if by[0] == 'course_name':
             
-        raise ValueError("Course ID Not Matched | Course Not Found")
+            if not isinstance(by[1], str):
+                raise TypeError('Course Name must be a String Value')
+            by[1].strip()
+            if len(by[1]) < 3 or len(by[1]) > 50:
+                raise ValueError('Course Name is Too Short/Long')
+            
+            for i in range(len(self._list)):
+                if self._list[i].course_name == by[1]:
+                    ind = i
+            
+            if ind == None:
+                raise ValueError("Name Not Matched | Course Not Found")
+
+        elif by[0] == 'course_id':
+            if not isinstance(by[1], str):
+                raise TypeError('Course ID must be a String Value')
+            by[1] = by[1].upper()
+            if not by[1].isalnum():
+                raise ValueError('Course ID must only consist of Alphabets and Numbers')
+            if len(by[1]) != 5:
+                raise ValueError('Course ID must consist of 5 Characters')
+            
+            for i in range(len(self._list)):
+                if self._list[i].course_id == by[1]:
+                    ind = i
+            if ind == None:
+                raise ValueError("Course ID Not Matched | Course Not Found")
+            
+        else:
+            raise AttributeError('Can Only Update by Course Name(course_name) or Course ID(course_id)')
+        
+        return ind
     
     def pop(self, index):
         
@@ -177,38 +205,13 @@ class CourseList:
     
     def remove(self, id):
 
-        index = self.index(id)
+        index = self.index(['course_id', id])
         
         del self[index]
         
     def update_element(self, by, **attr):
-        if not isinstance(by, list):
-            raise TypeError('by must be a List')
-        if len(by) != 2:
-            raise ValueError("by must be in this format, [name or course_id, 'course name or course id']")
         
-        ind = None
-        
-        if by[0] == 'name':
-            
-            if not isinstance(by[1], str):
-                raise TypeError('Course Name must be a String Value')
-            by[1].strip()
-            if len(by[1]) < 3 or len(by[1]) > 50:
-                raise ValueError('Course Name is Too Short/Long')
-            
-            for i in range(len(self._list)):
-                if self._list[i].course_name == by[1]:
-                    ind = i
-            
-            if ind == None:
-                raise ValueError("Name Not Matched | Course Not Found")
-        
-        elif by[0] == 'course_id':
-            ind = self.index(by[1])
-        
-        else:
-            raise AttributeError('Can Only Update by Course Name(course_name) or Course ID(course_id)')
+        ind = self.index(by)
             
         self[ind].update(**attr)
         

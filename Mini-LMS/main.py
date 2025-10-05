@@ -4,22 +4,56 @@ from lms.Course import Course, CourseList
 def run():
     try:
         
-        crs1 = Course("CS356", "OOP", "DSA with Python", (3, 2), 2, False)
-        crs2 = Course("CS210", "Database Systems", "Database System Concepts by Silberschatz", (3, 1), 3, False)
-        crs3 = Course("CS105", "Intro to Programming", "Python Crash Course", (3, 1), 1, False)
-        crs4 = Course("CS420", "Machine Learning", "Hands-On Machine Learning with Scikit-Learn", (3, 0), 7, True)
-        crs5 = Course("CS499", "Final Year Project", "N/A", (0, 6), 8, False)
+        # Story:
         
-        crslist = CourseList()
+        # 1. Create Empty Student List
+        dcs = Batch()
+   
+        # 2. Add Student(Ahmed, Aisha, Bilal)
+        course_secondsem = CourseList([Course('CS352', 'Object Oriented Concepts & Programming', 'Data Structure & Algorithm in Python',
+                                              (3, 1), 2, False),
+                                       Course('CS354', 'Digital Logic Design', 'Digital Fundamentals',
+                                              (2, 1), 2, False),
+                                       Course('CS356', 'Linear Algebra', 'Elementary Linear ALgebra',
+                                              (3, 0), 2, False),
+                                       Course('CS358', 'Descrete Structure', 'Not Specified',
+                                              (3, 0), 2, False),
+                                       Course('CS360', 'Communication and Presentation Skills', 'Not Specified',
+                                              (3, 0), 2, False),
+                                       Course('CS362', 'Ideology and Constitution of Pakistan', 'Not Specified',
+                                          (2, 0), 2, False)])
+
+        std1 = Student('Ahmed Khan', 20, '03234567890', 'ahmedk@yahoo.com', 'B2411000091', 2, 'CS', course_secondsem)
+        std2 = Student('Ayesha binte Abi Bakr', 19, '03180987654', 'ayesha06@gmail.com', 'B2411000035', 2, 'CS', course_secondsem)
+        std3 = Student('Bilal Siddiqui', 22, '03181191750', 'bilalsid@gmail.com', 'B2411000005', 2, 'CS', course_secondsem)
         
-        crslist.add(crs1)
-        crslist.add(crs2)
-        crslist.add(crs3)
+        dcs.admit(std1)
+        dcs.admit(std2)
+        dcs.admit(std3)
         
-        crslist.update_element(['name', 'OOP'], credit_hours=(4, 0))
+        # 3. New Student joins mid semester
+        std_new = Student('Muhammad Umer Farooq', 19, '03265789393', 'umer@gmail.com', 'B2411000185', 2, 'CS', course_secondsem)
+        dcs.put(0, std_new)
         
-        crslist.display()
         
+        # 4a. Search Student by Seat No.
+        index_of_std = dcs.index(['seat_no', 'B2411000035'])
+        print(dcs[index_of_std])
+        
+        # 4b. Search Student by Name
+        index_of_std = dcs.index(['name', 'Muhammad Umer Farooq'])
+        print(dcs[index_of_std])
+        
+        # 5. Student Changes its Phone Number and Age
+        dcs.update_element(['name', 'Muhammad Umer Farooq'], age = 18, contact = '03265789939')
+        print(dcs[0])
+        
+        # 6. Student Leaves the Departement
+        dcs.remove('B2411000005')
+    
+        #7. Checks the status of The Department
+        dcs.display()
+                
     except TypeError as e:
         print('Type Error:', e)
     except ValueError as e:

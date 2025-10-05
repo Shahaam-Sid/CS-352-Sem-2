@@ -109,7 +109,7 @@ Valid Arguments: {self.__class__.attributes}""")
     def __str__(self):
         return f"""Name: {self.name}   Age: {self.age}
 Contact: {self.contact}    E-Mail: {self.mail}
-Courses: {', '.join(x.course_name for x in self.courses)}"""
+Courses: {', '.join(x.course_id for x in self.courses)}"""
     
 
 class Student(Person):
@@ -172,7 +172,7 @@ class Student(Person):
 Seat No: {self.seat_no}    Field: {self.field}
 Contact: {self.contact}    E-Mail: {self.mail}
 Semester: {self.sem}
-Courses: {', '.join(x.course_name for x in self.courses)}"""
+Courses: {', '.join(x.course_id for x in self.courses)}"""
 
 class Teacher(Person):
     
@@ -217,7 +217,7 @@ Associate Professor, Assistant Professor, Lecturer, Teaching Associate, Visiting
         return f"""Name: {self.name}    Age: {self.age}
 ID No: {self.id_no}    Rank: {self.rank}
 Contact: {self.contact}    E-Mail: {self.mail}
-Courses: {', '.join(x.course_name for x in self.courses)}"""
+Courses: {', '.join(x.course_id for x in self.courses)}"""
 
 
 class Batch:
@@ -262,23 +262,53 @@ class Batch:
         
         self._list = []
         
-    def index(self, s_no):
-
-        if not isinstance(s_no, str):
-            raise TypeError('Seat No. must be a String Value')
-        s_no = s_no.upper()
-        if not s_no.isalnum():
-            raise ValueError('Seat No. must only consist of Alphabets and Number')
-        if len(s_no) != 11:
-            raise ValueError('Seat No. must consist of 11 Characters')
-        if s_no[0] != 'B':
-            raise ValueError('Incorrect Seat No. Format')
+    def index(self, by):
         
-        for i in range(len(self._list)):
-            if self._list[i].seat_no == s_no:
-                return i
+        if not isinstance(by, list):
+            raise TypeError('by must be a List')
+        if len(by) != 2:
+            raise ValueError("by must be in this format, [name or seat_no, 'students name or seat no']")
+        
+        ind = None       
+       
+        if by[0] == 'name':
             
-        raise ValueError("Seat No. Not Matched | Student Not Found")
+            if not isinstance(by[1], str):
+                raise TypeError('Name must be a String')
+            by[1] = by[1].strip()
+            if len(by[1]) < 6 or len(by[1]) > 30:
+                raise ValueError('Name must contain 6 - 30 Characters')
+            if not all((x.isalpha() or x.isspace()) for x in by[1]):
+                raise ValueError('Name must only contain Alphabet and spaces')
+            
+            for i in range(len(self._list)):
+                if self._list[i].name == by[1]:
+                    ind = i
+            
+            if ind == None:
+                raise ValueError("Name Not Matched | Student Not Found")
+        
+        elif by[0] == 'seat_no':
+            if not isinstance(by[1], str):
+                raise TypeError('Seat No. must be a String Value')
+            by[1] = by[1].upper()
+            if not by[1].isalnum():
+                raise ValueError('Seat No. must only consist of Alphabets and Number')
+            if len(by[1]) != 11:
+                raise ValueError('Seat No. must consist of 11 Characters')
+            if by[1][0] != 'B':
+                raise ValueError('Incorrect Seat No. Format')
+            
+            for i in range(len(self._list)):
+                if self._list[i].seat_no == by[1]:
+                    ind = i
+            if ind ==  None:    
+                raise ValueError("Seat No. Not Matched | Student Not Found")
+        
+        else:
+            raise AttributeError('Can Only Update by Name(name) or Seat No.(seat_no)')
+            
+        return ind
     
     def put(self, index, std):
         
@@ -317,40 +347,13 @@ class Batch:
     
     def remove(self, id):
 
-        index = self.index(id)
+        index = self.index(['seat_no', id])
         
         del self[index]
         
     def update_element(self, by, **attr):
-        if not isinstance(by, list):
-            raise TypeError('by must be a List')
-        if len(by) != 2:
-            raise ValueError("by must be in this format, [name or seat_no, 'students name or seat no']")
         
-        ind = None
-        
-        if by[0] == 'name':
-            
-            if not isinstance(by[1], str):
-                raise TypeError('Name must be a String')
-            by[1] = by[1].strip()
-            if len(by[1]) < 6 or len(by[1]) > 30:
-                raise ValueError('Name must contain 6 - 30 Characters')
-            if not all((x.isalpha() or x.isspace()) for x in by[1]):
-                raise ValueError('Name must only contain Alphabet and spaces')
-            
-            for i in range(len(self._list)):
-                if self._list[i].name == by[1]:
-                    ind = i
-            
-            if ind == None:
-                raise ValueError("Name Not Matched | Student Not Found")
-        
-        elif by[0] == 'seat_no':
-            ind = self.index(by[1])
-        
-        else:
-            raise AttributeError('Can Only Update by Name(name) or Seat No.(seat_no)')
+        ind = self.index(by)
             
         self[ind].update(**attr)
     
@@ -473,21 +476,52 @@ class Faculty:
         
         self._list = []
         
-    def index(self, i_no):
-
-        if not isinstance(i_no, str):
-            raise TypeError('ID No. must be a String Value')
-        i_no = i_no.upper()
-        if not i_no.isalnum():
-            raise ValueError('ID No. must only consist of Alphabets and Number')
-        if len(i_no) != 5:
-            raise ValueError('ID No. must consist of 5 Characters')
+    def index(self, by):
         
-        for i in range(len(self._list)):
-            if self._list[i].id_no == i_no:
-                return i
+        if not isinstance(by, list):
+            raise TypeError('by must be a List')
+        if len(by) != 2:
+            raise ValueError("by must be in this format, [name or id_no, 'students name or id no']")
+        
+        ind = None       
+       
+        if by[0] == 'name':
             
-        raise ValueError("ID No. Not Matched | Teacher Not Found")
+            if not isinstance(by[1], str):
+                raise TypeError('Name must be a String')
+            by[1] = by[1].strip()
+            if len(by[1]) < 6 or len(by[1]) > 30:
+                raise ValueError('Name must contain 6 - 30 Characters')
+            if not all((x.isalpha() or x.isspace()) for x in by[1]):
+                raise ValueError('Name must only contain Alphabet and spaces')
+            
+            for i in range(len(self._list)):
+                if self._list[i].name == by[1]:
+                    ind = i
+            
+            if ind == None:
+                raise ValueError("Name Not Matched | Student Not Found")
+        
+        elif by[0] == 'id_no':
+            if not isinstance(by[1], str):
+                raise TypeError('ID No. must be a String Value')
+            by[1] = by[1].upper()
+            if not by[1].isalnum():
+                raise ValueError('ID No. must only consist of Alphabets and Number')
+            if len(by[1]) != 5:
+                raise ValueError('ID No. must consist of 5 Characters')
+            
+            for i in range(len(self._list)):
+                if self._list[i].id_no == by[1]:
+                    ind = i
+                
+            if ind == None:
+                raise ValueError("ID No. Not Matched | Teacher Not Found")
+        
+        else:
+            raise AttributeError('Can Only Update by Name(name) or Seat No.(seat_no)')
+            
+        return ind
     
     def place(self, index, tch):
         
@@ -526,40 +560,13 @@ class Faculty:
     
     def remove(self, id):
 
-        index = self.index(id)
+        index = self.index(['id_no', id])
         
         del self[index]
         
     def update_element(self, by, **attr):
-        if not isinstance(by, list):
-            raise TypeError('by must be a List')
-        if len(by) != 2:
-            raise ValueError("by must be in this format, [name or id_no, 'teachers name or id no']")
         
-        ind = None
-        
-        if by[0] == 'name':
-            
-            if not isinstance(by[1], str):
-                raise TypeError('Name must be a String')
-            by[1] = by[1].strip()
-            if len(by[1]) < 6 or len(by[1]) > 30:
-                raise ValueError('Name must contain 6 - 30 Characters')
-            if not all((x.isalpha() or x.isspace()) for x in by[1]):
-                raise ValueError('Name must only contain Alphabet and spaces')
-            
-            for i in range(len(self._list)):
-                if self._list[i].name == by[1]:
-                    ind = i
-            
-            if ind == None:
-                raise ValueError("Name Not Matched | Teacher Not Found")
-        
-        elif by[0] == 'id_no':
-            ind = self.index(by[1])
-        
-        else:
-            raise AttributeError('Can Only Update by Name(name) or ID No.(id_no)')
+        ind = self.index(by)
             
         self[ind].update(**attr)
         
