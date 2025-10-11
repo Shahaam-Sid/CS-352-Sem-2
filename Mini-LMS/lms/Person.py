@@ -224,7 +224,7 @@ class Batch:
     def __init__(self, array = None):
         
         if array is None:
-            self._list = []
+            self._list = [None] * 5
         elif isinstance(array, list):
             if any(not isinstance(x, Student) for x in array):
                 raise TypeError("Array must contain Student objects only")
@@ -233,34 +233,34 @@ class Batch:
             raise TypeError("Array must be a list or None")
         
     def display(self):
-        
-        print("No. of Students:", len(self))
+        print('-' * 50)
+        print("Number of Students: ", self.occupied_slots())
+        print("Total Capacity:", len(self))
         for std in self._list:
-            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-            print(std)
-            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-        print("++++++END OF LIST++++++")
+            if std is not None:
+                print("-=" * 25)
+                print(std)
+                print("-=" * 25)
+        print('-' * 20 + "END OF LIST" + '-' * 20)
             
     def admit(self, student):
 
         if not isinstance(student, Student):
             raise TypeError("Batch Only Works with Students Objects")
         
-        initial_lenght = len(self._list)
-        final_lenght = initial_lenght + 1
+        self._check_dupe(student.seat_no)
         
-        new_list = [None] * final_lenght
-        
-        for i in range(initial_lenght):
-            new_list[i] = self._list[i]
+        if len(self._list) == self.occupied_slots():
+            self._extend_array()
             
-        new_list[-1] = student
-        
-        self._list = new_list
+        for i in range(len(self._list)):
+            if self._list[i] is None:
+                self._list[i] = student
+                return
         
     def clear_all(self):
         
-        self._list = []
+        self._list = [None] * 5
         
     def index(self, by):
         
@@ -282,8 +282,9 @@ class Batch:
                 raise ValueError('Name must only contain Alphabet and spaces')
             
             for i in range(len(self._list)):
-                if self._list[i].name == by[1]:
-                    ind = i
+                if self._list[i] is not None:
+                    if self._list[i].name == by[1]:
+                        ind = i
             
             if ind == None:
                 raise ValueError("Name Not Matched | Student Not Found")
@@ -300,8 +301,9 @@ class Batch:
                 raise ValueError('Incorrect Seat No. Format')
             
             for i in range(len(self._list)):
-                if self._list[i].seat_no == by[1]:
-                    ind = i
+                if self._list[i] is not None:
+                    if self._list[i].seat_no == by[1]:
+                        ind = i
             if ind ==  None:    
                 raise ValueError("Seat No. Not Matched | Student Not Found")
         
@@ -317,23 +319,31 @@ class Batch:
         if not isinstance(std, Student):
             raise TypeError("Can only insert Students object")
         
+        self._check_dupe(std.seat_no)
+        
+        occ = self.occupied_slots()
         n = len(self._list)
         
         if index < 0:
-            index = n + index
-        
-        new_list = [None] * (n + 1)
-        
-        for i in range(n + 1):
-            if i < index:
-                new_list[i] = self._list[i]
-            if i == index:
-                new_list[i] = std
-            if i > index:
-                new_list[i] = self._list[i - 1]
+            index = occ + index
+            if index < 0:
+                index = 0
+            
+        while index >= len(self._list):
+            self._extend_array()
+
+        if index >= occ:
+            self._list[index] = std
+        else:
+
+            if occ >= len(self._list):
+                self._extend_array()
                 
-        self._list = new_list
-        
+            for i in range(occ, index, -1):
+                self._list[i] = self._list[i - 1]
+            
+            self._list[index] = std
+            
     def pop(self, index):
         
         if not isinstance(index, int):
@@ -356,6 +366,29 @@ class Batch:
         ind = self.index(by)
             
         self[ind].update(**attr)
+        
+    def _check_dupe(self, id):
+        for std in self._list:
+            if std is not None:
+                if id == std.seat_no:
+                    raise ValueError('This Seat No. already exists in the Array')
+            
+    def _extend_array(self):
+        temp = [None] * (len(self._list) * 2)
+        
+        for i in range(len(self._list)):
+            temp[i] = self._list[i]
+            
+        self._list = temp
+        
+    def occupied_slots(self):
+        occ_slot = 0
+        for i in self._list:
+            if i is not None:
+                occ_slot += 1
+            
+        return(occ_slot)
+
     
     def __contains__(self, std):
         if not isinstance(std, Student):
@@ -431,14 +464,14 @@ class Batch:
         return lenght
     
     def __str__(self):
-        return "[" + ", ".join(str(std) for std in self._list) + "]"
+        return "[" + ", ".join(str(std) for std in self._list if std is not None) + "]"
         
     
 class Faculty:
     def __init__(self, array = None):
         
         if array is None:
-            self._list = []
+            self._list = [None] * 5
         elif isinstance(array, list):
             if any(not isinstance(x, Teacher) for x in array):
                 raise TypeError("Array must contain Teacher objects only")
@@ -447,30 +480,30 @@ class Faculty:
             raise TypeError("Array must be a list or None")
         
     def display(self):
-        
-        print("No. of Teachers:", len(self))
+        print('-' * 50)
+        print("Number of Teachers: ", self.occupied_slots())
+        print("Total Capacity:", len(self))
         for tch in self._list:
-            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-            print(tch)
-            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-        print("++++++END OF LIST++++++")
+            if tch is not None:
+                print("-=" * 25)
+                print(tch)
+                print("-=" * 25)
+        print('-' * 20 + "END OF LIST" + '-' * 20)
         
     def register(self, tch):
 
         if not isinstance(tch, Teacher):
             raise TypeError("Faculty Only Works with Teacher Objects")
         
-        initial_lenght = len(self._list)
-        final_lenght = initial_lenght + 1
+        self._check_dupe(tch.id_no)
         
-        new_list = [None] * final_lenght
-        
-        for i in range(initial_lenght):
-            new_list[i] = self._list[i]
+        if len(self._list) == self.occupied_slots():
+            self._extend_array()
             
-        new_list[-1] = tch
-        
-        self._list = new_list
+        for i in range(len(self._list)):
+            if self._list[i] is None:
+                self._list[i] = tch
+                return
         
     def clear_all(self):
         
@@ -496,8 +529,9 @@ class Faculty:
                 raise ValueError('Name must only contain Alphabet and spaces')
             
             for i in range(len(self._list)):
-                if self._list[i].name == by[1]:
-                    ind = i
+                if self._list[i] is not None:
+                    if self._list[i].name == by[1]:
+                        ind = i
             
             if ind == None:
                 raise ValueError("Name Not Matched | Student Not Found")
@@ -512,8 +546,9 @@ class Faculty:
                 raise ValueError('ID No. must consist of 5 Characters')
             
             for i in range(len(self._list)):
-                if self._list[i].id_no == by[1]:
-                    ind = i
+                if self._list[i] is not None:
+                    if self._list[i].id_no == by[1]:
+                        ind = i
                 
             if ind == None:
                 raise ValueError("ID No. Not Matched | Teacher Not Found")
@@ -530,22 +565,30 @@ class Faculty:
         if not isinstance(tch, Teacher):
             raise TypeError("Can only insert Teacher object")
         
+        self._check_dupe(tch.id_no)
+        
+        occ = self.occupied_slots()
         n = len(self._list)
         
         if index < 0:
-            index = n + index
-        
-        new_list = [None] * (n + 1)
-        
-        for i in range(n + 1):
-            if i < index:
-                new_list[i] = self._list[i]
-            if i == index:
-                new_list[i] = tch
-            if i > index:
-                new_list[i] = self._list[i - 1]
+            index = occ + index
+            if index < 0:
+                index = 0
+            
+        while index >= len(self._list):
+            self._extend_array()
+
+        if index >= occ:
+            self._list[index] = tch
+        else:
+
+            if occ >= len(self._list):
+                self._extend_array()
                 
-        self._list = new_list
+            for i in range(occ, index, -1):
+                self._list[i] = self._list[i - 1]
+            
+            self._list[index] = tch
         
     def pop(self, index):
         
@@ -569,6 +612,28 @@ class Faculty:
         ind = self.index(by)
             
         self[ind].update(**attr)
+        
+    def _check_dupe(self, id):
+        for tch in self._list:
+            if tch is not None:
+                if id == tch.id_no:
+                    raise ValueError('This ID No. already exists in the Array')
+        
+    def _extend_array(self):
+        temp = [None] * (len(self._list) * 2)
+        
+        for i in range(len(self._list)):
+            temp[i] = self._list[i]
+            
+        self._list = temp
+        
+    def occupied_slots(self):
+        occ_slot = 0
+        for i in self._list:
+            if i is not None:
+                occ_slot += 1
+            
+        return(occ_slot)
         
     def __contains__(self, tch):
         if not isinstance(tch, Teacher):
@@ -644,4 +709,4 @@ class Faculty:
         return lenght
     
     def __str__(self):
-        return "[" + ", ".join(str(tch) for tch in self._list) + "]"
+        return "[" + ", ".join(str(tch) for tch in self._list if tch is not None) + "]"

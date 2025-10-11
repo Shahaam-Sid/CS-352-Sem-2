@@ -33,20 +33,20 @@ def run():
         
         # 3. New Student joins mid semester
         std_new = Student('Muhammad Umer Farooq', 19, '03265789393', 'umer@gmail.com', 'B2411000185', 2, 'CS', course_secondsem)
-        dcs.put(0, std_new)
+        dcs.put(1, std_new)
         
         
         # 4a. Search Student by Seat No.
         index_of_std = dcs.index(['seat_no', 'B2411000035'])
-        print(dcs[index_of_std])
+        print(dcs[index_of_std], '\n')
         
         # 4b. Search Student by Name
         index_of_std = dcs.index(['name', 'Muhammad Umer Farooq'])
-        print(dcs[index_of_std])
+        print(dcs[index_of_std], '\n')
         
         # 5. Student Changes its Phone Number and Age
         dcs.update_element(['name', 'Muhammad Umer Farooq'], age = 18, contact = '03265789939')
-        print(dcs[0])
+        print(dcs[1], '\n')
         
         # 6. Student Leaves the Departement
         dcs.remove('B2411000005')

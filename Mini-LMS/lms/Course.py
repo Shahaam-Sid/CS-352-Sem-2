@@ -110,7 +110,7 @@ class CourseList:
     def __init__(self, array = None):
         
         if array is None:
-            self._list = []
+            self._list = [None] * 5
         elif isinstance(array, list):
             if any(not isinstance(x, Course) for x in array):
                 raise TypeError("Array must contain Course objects only")
@@ -119,34 +119,34 @@ class CourseList:
             raise TypeError("Array must be a list or None")
     
     def display(self):
-        
-        print("No. of Courses:", len(self))
+        print('-' * 50)
+        print("Number of Courses: ", self.occupied_slots())
+        print("Total Capacity:", len(self))
         for crs in self._list:
-            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-            print(crs)
-            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-        print("++++++END OF LIST++++++")
+            if crs is not None:
+                print("-=" * 25)
+                print(crs)
+                print("-=" * 25)
+        print("-" * 20 + "END OF LIST" + "-" * 20)
         
     def add(self, crs):
 
         if not isinstance(crs, Course):
             raise TypeError("CourseList Only Works with Course Objects")
         
-        initial_lenght = len(self._list)
-        final_lenght = initial_lenght + 1
+        self._check_dupe(crs.course_id)
         
-        new_list = [None] * final_lenght
-        
-        for i in range(initial_lenght):
-            new_list[i] = self._list[i]
+        if len(self._list) == self.occupied_slots():
+            self._extend_array()
             
-        new_list[-1] = crs
-        
-        self._list = new_list
+        for i in range(len(self._list)):
+            if self._list[i] is None:
+                self._list[i] = crs
+                return
         
     def clear_all(self):
         
-        self._list = []
+        self._list = [None] * 5
         
     def index(self, by):
         
@@ -166,8 +166,9 @@ class CourseList:
                 raise ValueError('Course Name is Too Short/Long')
             
             for i in range(len(self._list)):
-                if self._list[i].course_name == by[1]:
-                    ind = i
+                if self._list[i] is not None:
+                    if self._list[i].course_name == by[1]:
+                        ind = i
             
             if ind == None:
                 raise ValueError("Name Not Matched | Course Not Found")
@@ -182,8 +183,9 @@ class CourseList:
                 raise ValueError('Course ID must consist of 5 Characters')
             
             for i in range(len(self._list)):
-                if self._list[i].course_id == by[1]:
-                    ind = i
+                if self._list is not None:
+                    if self._list[i].course_id == by[1]:
+                        ind = i
             if ind == None:
                 raise ValueError("Course ID Not Matched | Course Not Found")
             
@@ -214,6 +216,28 @@ class CourseList:
         ind = self.index(by)
             
         self[ind].update(**attr)
+        
+    def _check_dupe(self, id):
+        for crs in self._list:
+            if crs is not None:
+                if id == crs.course_id:
+                    raise ValueError('This Course ID already exists in the Array')
+    
+    def _extend_array(self):
+        temp = [None] * (len(self._list) * 2)
+        
+        for i in range(len(self._list)):
+            temp[i] = self._list[i]
+            
+        self._list = temp
+    
+    def occupied_slots(self):
+        occ_slot = 0
+        for i in self._list:
+            if i is not None:
+                occ_slot += 1
+            
+        return(occ_slot)
         
     def __contains__(self, crs):
         if not isinstance(crs, Course):
@@ -290,4 +314,4 @@ class CourseList:
         return lenght
     
     def __str__(self):
-        return "[" + ", ".join(str(crs) for crs in self._list) + "]"
+        return "[" + ", ".join(str(crs) for crs in self._list if crs is not None) + "]"
