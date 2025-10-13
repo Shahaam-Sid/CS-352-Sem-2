@@ -25,6 +25,7 @@ This repository contains implementations of various OOP concepts including class
 - [**Lab Task Week 9**](./Lab-Task-Week-9/) - Birthday Paradox simulation and Word Counter
 - [**Lab Task Week 10: Lists**](./Lists-Lab-Task-w10/) - Credit card and student record management with static arrays
 - [**Lab Task Week 8: N-Dimensional Vectors**](./nDimensionalVectors-LabTaskw8-/) - Generic N-dimensional vector implementation
+- [**Lab Task Range**](./Range/) - Custom Range class mimicing pythons built-in range function
 
 ### Projects
 
