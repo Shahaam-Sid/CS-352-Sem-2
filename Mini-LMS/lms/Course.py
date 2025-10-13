@@ -313,5 +313,19 @@ class CourseList:
                 
         return lenght
     
+    def __iter__(self):
+        self.__iter_index = 0
+        return self
+    
+    def __next__(self):
+        while self.__iter_index < len(self._list):
+            element = self._list[self.__iter_index]
+            self.__iter_index += 1
+            
+            if element is not None:
+                return element
+            
+        raise StopIteration
+    
     def __str__(self):
         return "[" + ", ".join(str(crs) for crs in self._list if crs is not None) + "]"
