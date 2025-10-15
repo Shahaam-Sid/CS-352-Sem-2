@@ -15,6 +15,7 @@ This repository contains implementations of various OOP concepts including class
 - [**Dunder Methods**](./dunder/) - Magic methods and operator overloading
 - [**Inheritance**](./Inheritence/) - Inheritance hierarchies and patterns
 - [**Properties**](./properties/) - Property decorators and encapsulation
+- [**Iterables and Iterators**](./iterator-&-iterable/) - Difference between Iterables and Iterators
 
 ### Lab Tasks
 
