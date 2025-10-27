@@ -1,7 +1,7 @@
 class Progression:
     
     def __init__(self, start: int = 0) -> None:
-        self._start = start
+        self.start = start
         self._current = start
         
     @property
@@ -12,6 +12,8 @@ class Progression:
     def start(self, n):
         if not isinstance(n, int):
             raise TypeError('Start Value must be an Integer')
+        
+        self._start = n
         
     def progession(self, n: int) -> str:
         if not isinstance(n, int):
@@ -44,6 +46,9 @@ class Progression:
         self._current = self._start
         return self
     
+    def __str__(self):
+        return f"Start: {self.start}"
+    
     
     
     
@@ -65,6 +70,9 @@ class ArithmeticProgression(Progression):
         
     def _advance(self):
         self._current += self.increment
+    
+    def __str__(self):
+        return f"Start: {self.start}, Increment: {self.increment}"
         
         
         
@@ -87,19 +95,47 @@ class GeometricProgression(Progression):
     def _advance(self):
         self._current *= self.base
         
+    def __str__(self):
+        return f"Start: {self.start}, Base: {self.base}"
+        
         
         
 
 class FibonacciProgression(Progression):
     def __init__(self, first_value: int = 0, second_value: int = 1) -> None:
         super().__init__(first_value) #returns the value of first_value to the constructer of parent class
-        self._second_value = second_value
-        self._prev = self._second_value - first_value
+        self.second_value = second_value
+        self._prev = self.second_value - first_value
+        
+    @property
+    def first_value(self):
+        return self.start    
+    
+    @first_value.setter
+    def first_value(self, n):
+        if not isinstance(n, int):
+            raise TypeError('First Value must be an Integer')
+        
+        self.start = n
+        
+        
+    @property
+    def second_value(self):
+        return self._second_value
+    
+    @second_value.setter
+    def second_value(self, n):
+        if not isinstance(n, int):
+            raise TypeError('Second Value must be an Integer')
+        if n <= self.first_value:
+            raise ValueError('Second Value must be greater then First Value')
+        
+        self._second_value = n
         
     def _advance(self):
         self._prev, self._current = self._current, self._prev + self._current
     
     def __iter__(self):
         super().__iter__()
-        self._prev = self._second_value - self.start
+        self._prev = self.second_value - self.start
         return self
