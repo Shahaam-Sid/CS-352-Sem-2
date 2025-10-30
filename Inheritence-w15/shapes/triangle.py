@@ -32,7 +32,7 @@ class Triangle(Polygon):
     
     
 class IsoscelesTriangle(Triangle):
-    def __init__(self, base, height):
+    def __init__(self, base: int | float, height: int | float):
         super().__init__(base, height)
         
     def perimeter(self) -> int | float:
@@ -45,14 +45,15 @@ class IsoscelesTriangle(Triangle):
         return f"IsoscelesTriangle(base={self.base}, height={self.height})"
     
 class EquilateralTriangle(IsoscelesTriangle):
-    def __init__(self, base, height):
+    def __init__(self, base: int | float):
+        
+        height = ((base ** 2) - ((base / 2) ** 2)) ** 0.5
         super().__init__(base, height)
         
     def perimeter(self) -> int | float:
         return self.base * 3
     
     def __str__(self):
-        return f"Sides: {self.base}, Hieght: {self.height}"
+        return f"Sides: {self.base}"
     def __repr__(self):
-        return f"IsoscelesTriangle(base={self.base}, height={self.height})"
-        
+        return f"EquilateralTriangle(base={self.base})"

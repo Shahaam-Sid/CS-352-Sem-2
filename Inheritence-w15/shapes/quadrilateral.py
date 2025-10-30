@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from polygon import Polygon
 
 class Quadrilateral(Polygon):
@@ -56,6 +57,6 @@ class Rectangle(Quadrilateral):
         return (self.side + self.side_2) * 2
     
     def __str__(self):
-        return f'Sides: {self.side}, {self.side_2}'
+        return f'Side 1: {self.side}, Side 2: {self.side_2}'
     def __repr__(self):
         return f'Square(side={self.side}, side_2={self.side_2})'
