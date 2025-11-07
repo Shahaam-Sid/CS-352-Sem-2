@@ -11,6 +11,7 @@ This repository contains implementations of various OOP concepts including class
 ### Core Concepts
 
 - [**Classes**](./cls/) - Basic class creation and object instantiation
+- [**Cloning**](./cloning/) - Copy and DeepCopy
 - [**Copy Constructor**](./copy-construcor/) - Implementation of copy constructors in Python
 - [**Dunder Methods**](./dunder/) - Magic methods and operator overloading
 - [**Inheritance**](./Inheritence/) - Inheritance hierarchies and patterns
