@@ -35,6 +35,10 @@ This repository contains implementations of various OOP concepts including class
 - [**Mini-LMS**](./Mini-LMS/) - Mini Learning Management System with person and course management
 - [**Turtle Graphics**](./Turtle/) - Custom turtle library implementation using tkinter
 
+### Exercises
+
+- [**Book Exercises**](./BookExercisesExamPrep/) - Mini Learning Management System with person and course management
+
 ---
 
 ## 🛠️ Technologies Used
